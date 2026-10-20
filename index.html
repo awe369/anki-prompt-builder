@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anki Prompt Builder — exam-ready Anki cards from any source</title>
+<meta name="description" content="Pick your own Anki note types by looking at real card previews, fill in a few settings, and copy one prompt that makes any AI turn a PDF, image, transcript or book into import-ready cards.">
+<meta name="theme-color" content="#2f5bd3">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Anki Prompt Builder">
+<meta property="og:description" content="Pick your own Anki note types by looking at real card previews, fill in a few settings, and copy one prompt that makes any AI turn a PDF, image, transcript or book into import-ready cards.">
+<meta property="og:image" content="assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try { var t = localStorage.getItem("apb-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body>
+<a class="skip" href="#builder">Skip to the builder</a>
+<nav class="topnav" aria-label="Main">
+  <div class="in">
+    <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="19" height="22" rx="4" fill="#9db4f5" transform="rotate(-10 13 18)"/><rect x="8" y="4" width="20" height="23" rx="4" fill="#2f5bd3"/><path d="M13 12h10M13 16h7M13 20h9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span>Anki Prompt Builder</span></a>
+    <div class="navlinks">
+      <a href="#builder">Builder</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/YOUR-USERNAME/anki-prompt-builder" rel="noopener">GitHub</a>
+      <button type="button" class="themebtn" id="themebtn" aria-label="Switch light / dark theme" title="Light / dark">◐</button>
+      <a class="cta" href="#builder">Start</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div>
+    <span class="eyebrow">For UPSC · UPPSC · LLB · any exam</span>
+    <h1>Any PDF, image or video → <em>exam-ready Anki cards</em>, in your own card designs.</h1>
+    <p class="lead">Dekho tumhara card Anki mein kaisa dikhega, wahi note types chuno, settings bharo — aur ek prompt copy karo jo ChatGPT, Gemini ya Claude ko seedha import-ready <code>.txt</code> banane ko bolta hai. Har cloze mein hint, har card par memory trick, NCERT + PIB + current affairs extra cards.</p>
+    <div class="ctas"><a class="btn" href="#builder">Build my prompt →</a><a class="btn ghost" href="#how">How it works</a></div>
+    <div class="stats-row">
+      <div class="stat"><b>83</b><span>note types</span></div>
+      <div class="stat"><b>21</b><span>Smart modes &amp; layouts</span></div>
+      <div class="stat"><b>14</b><span>ready subject sets</span></div>
+      <div class="stat"><b>0</b><span>sign-ups, 0 tracking</span></div>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <img src="assets/previews/sb-compare-q.webp" alt="">
+    <img src="assets/previews/tlclassic-q.webp" alt="">
+    <img src="assets/previews/judge-q.webp" alt="">
+  </div>
+</header>
+
+<main>
+<div class="wrap" id="builder">
+
+  <section class="picker" aria-label="Note type picker">
+    <div class="picker-head">
+      <p class="step"><b>01</b> Note types chuno <span class="hint" id="ntcount"></span></p>
+      <span class="hint">Search karo ki tumhari info kaisi hai — jaise <i>dates</i>, <i>map</i>, <i>article</i>, <i>numbers</i>, <i>process</i>, <i>statements</i>, <i>essay</i>. Ya subject ka ready set chuno.</span>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" id="q" placeholder="Kaunsi info yaad karni hai? e.g. rivers states, saal tarikh, article text, causes" aria-label="Search note types" autocomplete="off">
+    </div>
+    <div class="viewbar"><span class="lbl">Dekhne ka tarika:</span>
+      <button type="button" class="mini" data-v="gallery" aria-pressed="true">🖼️ Card preview</button>
+      <button type="button" class="mini" data-v="list" aria-pressed="false">📋 List</button>
+      <span class="hint">Preview par tap karo — Anki mein front aur back kaisa dikhega, bada karke dekho.</span>
+    </div>
+    <div class="subjects" id="presets"><span class="lbl">Ready sets:</span></div>
+    <div class="tray" id="tray" aria-live="polite"></div>
+    <p class="warn" id="manywarn" hidden>12 se zyada types chune hain — AI confuse ho sakta hai. Ek source ke liye 3–8 types best rehte hain.</p>
+    <div class="results" id="results" hidden>
+      <div class="sec"><h3>Search results <small id="rcount"></small></h3></div>
+      <div class="rows" id="rrows"></div>
+    </div>
+    <div class="sec uni">
+      <h3>⭐ Universal — sab par chalne wale <small>Koi bhi subject, koi bhi info. Kuch samajh na aaye to inhi se shuru karo.</small></h3>
+      <div class="rows" id="grprows"></div>
+      <div class="modepanel" id="mp-smartbasic" hidden>
+        <div class="sgrp-h"><b>✦ Smart Basic — specific modes</b><span class="hint">Sirf wahi mode tick rakho jo chahiye. Sab tick = pura Smart Basic.</span><span class="n" id="n-smartbasic"></span><button type="button" class="mini" data-grpall="smartbasic" id="all-smartbasic">Sab chuno</button></div>
+        <div class="rows" id="sbrows"></div>
+      </div>
+      <div class="modepanel" id="mp-smartcloze" hidden>
+        <div class="sgrp-h"><b>✦ Smart Cloze — specific layouts</b><span class="hint">Sirf wahi layout tick rakho jo chahiye. Sab tick = pura Smart Cloze.</span><span class="n" id="n-smartcloze"></span><button type="button" class="mini" data-grpall="smartcloze" id="all-smartcloze">Sab chuno</button></div>
+        <div class="rows" id="scrows"></div>
+      </div>
+      <div class="sgrp">
+        <div class="sgrp-h"><b>Simple basic & cloze</b><span class="hint">Seedhe, saaf cards.</span></div>
+        <div class="rows" id="unirows"></div>
+      </div>
+      <div class="field" id="cstylefield" hidden>
+        <label for="cstyle">❤️ Cloze ka design</label>
+        <select id="cstyle"></select>
+      </div>
+    </div>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <div class="grid">
+    <form class="panel" id="form" autocomplete="off">
+      <p class="step"><b>02</b> Basic settings</p>
+      <div class="row2">
+        <div class="field">
+          <label for="date">Aaj ki date</label>
+          <input type="date" id="date">
+        </div>
+        <div class="field">
+          <label for="size">Kitne cards</label>
+          <select id="size">
+            <option value="auto">Auto (content ke hisaab se)</option>
+            <option value="few">Kam — sirf important (≈30)</option>
+            <option value="medium">Medium (≈50–90)</option>
+            <option value="max">Maximum — kuch bhi na chhoote</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="exam">Exam / purpose</label>
+        <input type="text" id="exam" value="UPSC Prelims + UPPSC PCS">
+      </div>
+      <div class="field">
+        <label for="lang">Language</label>
+        <input type="text" id="lang" value="English, Hindi terms in brackets; memory tricks may be in Hinglish">
+      </div>
+      <p class="step"><b>03</b> Deck kahan jaaye</p>
+      <div class="opts" role="radiogroup" aria-label="Deck mode">
+        <label class="opt"><input type="radio" name="deckmode" id="dm-ask" value="ask" checked><span><strong>Import ke time main chunoonga</strong><span>Sab cards ek deck mein. Chhote source ke liye best.</span></span></label>
+        <label class="opt"><input type="radio" name="deckmode" id="dm-sub" value="sub"><span><strong>Mera deck + AI topic-wise sub-decks banaye</strong><span>Bade source (chapter / book / lambi video) ke liye best.</span></span></label>
+        <label class="opt"><input type="radio" name="deckmode" id="dm-fixed" value="fixed"><span><strong>Sab cards mere diye ek deck mein</strong><span>Deck file se aayega, import par puchhega nahi.</span></span></label>
+      </div>
+      <div class="field" id="deckfield" hidden>
+        <label for="deck">Deck ka naam</label>
+        <input type="text" id="deck" value="UPSC::Polity" placeholder="e.g. UPSC::Polity">
+        <span class="hint">Levels ke liye <code>::</code> lagao, jaise <code>UPSC::Polity</code>.</span>
+      </div>
+      <p class="step"><b>04</b> Extra cards</p>
+      <span class="hint">Jo sources chahiye unhe tick karo. Kuch bhi tick kiya to 15–25% extra cards banenge.</span>
+      <div class="checks">
+        <label class="toggle" for="x-ncert"><input type="checkbox" id="x-ncert" checked> NCERT</label>
+        <label class="toggle" for="x-wiki"><input type="checkbox" id="x-wiki" checked> Wikipedia</label>
+        <label class="toggle" for="x-ca"><input type="checkbox" id="x-ca" checked> Current affairs</label>
+        <label class="toggle" for="x-pib"><input type="checkbox" id="x-pib" checked> PIB (govt press releases)</label>
+      </div>
+      <label class="toggle" for="pyq"><input type="checkbox" id="pyq" checked> PYQ (exam + year) merge karo</label>
+      <p class="step"><b>05</b> Kuch aur? <span class="hint">(optional)</span></p>
+      <div class="field">
+        <label for="topic">Topic / source ka naam</label>
+        <input type="text" id="topic" placeholder="e.g. Laxmikanth Ch 7 – Fundamental Rights">
+      </div>
+      <div class="field">
+        <label for="wish">Special instructions</label>
+        <textarea id="wish" placeholder="e.g. case laws par zyada focus, Article numbers ke cloze zaroor banao"></textarea>
+      </div>
+      <button type="button" class="btn ghost" id="reset">Default settings</button>
+    </form>
+    <section class="out" aria-label="Final prompt">
+      <div class="bar">
+        <span class="stats" id="stats">—</span>
+        <span class="ctas"><button type="button" class="btn ghost" id="dl">⬇ .txt</button><button type="button" class="btn" id="copy">Copy prompt</button></span>
+      </div>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      <div class="card"><pre id="preview" tabindex="0"></pre></div>
+    </section>
+  </div>
+</div>
+<dialog id="mv" aria-labelledby="mv-title">
+  <div class="mv-in">
+    <div class="mv-head">
+      <div><h2 id="mv-title"></h2><p id="mv-best" class="hint"></p><p id="mv-fields" class="hint mono"></p></div>
+      <button type="button" class="mv-x" id="mv-close" aria-label="Close">×</button>
+    </div>
+    <div class="mv-sides">
+      <figure><figcaption>Front (question)</figcaption><img id="mv-q" alt="Front side in Anki"></figure>
+      <figure><figcaption>Back (answer)</figcaption><img id="mv-a" alt="Back side in Anki"></figure>
+    </div>
+    <div class="mv-foot"><span class="hint">Preview tumhare apne note type ke design (light mode) se bana hai, sample content ke saath.</span><button type="button" class="btn" id="mv-pick"></button></div>
+  </div>
+</dialog>
+
+
+<section class="band spaced" id="how">
+  <div class="section-h"><h2>How it works</h2><p>Four steps, about two minutes. Works with any AI that can read your file.</p></div>
+  <div class="how">
+    <div class="s"><span class="no">01</span><h3>Pick note types</h3><p>Search by the kind of information (dates, maps, articles, numbers) or tap a subject set. Open any card to see its front and back exactly as Anki shows it.</p></div>
+    <div class="s"><span class="no">02</span><h3>Fill the settings</h3><p>Date, exam, language, deck mode and which extra sources to add — NCERT, Wikipedia, current affairs, PIB.</p></div>
+    <div class="s"><span class="no">03</span><h3>Copy &amp; paste</h3><p>Copy the prompt (or download it as .txt), paste it into ChatGPT / Gemini / Claude and attach your PDF, image, transcript or notes.</p></div>
+    <div class="s"><span class="no">04</span><h3>Import in Anki</h3><p>Save the AI's answer as <code>anki_import.txt</code> → Anki → File → Import. Cards land in your existing note types with your own design.</p></div>
+  </div>
+</section>
+
+<section class="band spaced" id="faq">
+  <div class="section-h"><h2>FAQ</h2></div>
+  <div class="faq">
+    <details><summary>Will it create new note types in my Anki?</summary><p>No. The prompt uses the exact names and field order of your existing note types, and the file header tells Anki which note type each line belongs to.</p></details>
+    <details><summary>Smart Basic / Smart Cloze — whole or specific modes?</summary><p>By default the whole note type is selected, and the AI picks the best mode for every fact. Tap “Specific modes chuno” to keep only the modes you want.</p></details>
+    <details><summary>Why does Anki not ask me for a deck?</summary><p>Choose “Import ke time main chunoonga” in the deck settings — the file then has no deck column and Anki shows the Deck dropdown.</p></details>
+    <details><summary>Do the previews show my real card design?</summary><p>Yes. Each preview is your note type rendered by Anki's own engine with sample content (light mode). Interactive cards are shown as they first open.</p></details>
+    <details><summary>Is my data sent anywhere?</summary><p>No. The site is a static page; your settings stay in your own browser. Nothing is uploaded.</p></details>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot"><div class="in"><span>Anki Prompt Builder · made for exam prep</span><span>Works on Anki desktop &amp; AnkiDroid · No sign-up · No tracking</span></div></footer>
+
+<script>window.APB_PREV = "assets/previews/";</script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var b = document.getElementById("themebtn"), r = document.documentElement;
+  b.addEventListener("click", function () {
+    var dark = r.getAttribute("data-theme") ? r.getAttribute("data-theme") === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    var n = dark ? "light" : "dark"; r.setAttribute("data-theme", n);
+    try { localStorage.setItem("apb-theme", n); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
