@@ -41,16 +41,16 @@
     <p class="lead">Dekho tumhara card Anki mein kaisa dikhega, wahi note types chuno, settings bharo — aur ek prompt copy karo jo ChatGPT, Gemini ya Claude ko seedha import-ready <code>.txt</code> banane ko bolta hai. Har cloze mein hint, har card par memory trick, NCERT + PIB + current affairs extra cards.</p>
     <div class="ctas"><a class="btn" href="#builder">Build my prompt →</a><a class="btn ghost" href="#how">How it works</a></div>
     <div class="stats-row">
-      <div class="stat"><b>83</b><span>note types</span></div>
+      <div class="stat"><b>84</b><span>note types</span></div>
       <div class="stat"><b>21</b><span>Smart modes &amp; layouts</span></div>
       <div class="stat"><b>14</b><span>ready subject sets</span></div>
       <div class="stat"><b>0</b><span>sign-ups, 0 tracking</span></div>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
-    <img src="assets/previews/sb-compare-q.webp" alt="">
-    <img src="assets/previews/tlclassic-q.webp" alt="">
-    <img src="assets/previews/judge-q.webp" alt="">
+    <img data-k="sb-compare-q" alt="">
+    <img data-k="tlclassic-q" alt="">
+    <img data-k="judge-q" alt="">
   </div>
 </header>
 
@@ -208,8 +208,10 @@
 <footer class="site-foot"><div class="in"><span>Anki Prompt Builder · made for exam prep</span><span>Works on Anki desktop &amp; AnkiDroid · No sign-up · No tracking</span></div></footer>
 
 <script>window.APB_PREV = "assets/previews/";</script>
+<script src="assets/js/previews.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
+<script>document.querySelectorAll(".hero-art img[data-k]").forEach(function (i) { i.src = window.APB_IMG[i.getAttribute("data-k")]; });</script>
 <script>
 (function () {
   var b = document.getElementById("themebtn"), r = document.documentElement;

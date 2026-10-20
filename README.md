@@ -6,7 +6,7 @@ You see how every card will look in Anki (front and back) before you pick it, ch
 
 ## Features
 
-- **83 note types + 21 Smart modes**, each with a real front/back preview rendered by Anki itself.
+- **84 note types + 21 Smart modes**, each with a real front/back preview rendered by Anki itself.
 - **Smart Basic and Smart Cloze** are selected as whole note types by default (the AI picks the best mode per fact); open *“Specific modes chuno”* to keep only certain modes.
 - **Search by kind of information** — `dates`, `map`, `article text`, `numbers`, `causes`, `statements`… (Hinglish works too: `saal tarikh`, `naksha`, `samkaleen`).
 - **14 ready subject sets** — Polity, History, Geography, Economy, Environment, Science, Culture, Current Affairs, Law, Mains, English, Prelims practice, Chronology pack, Universal.
@@ -38,7 +38,7 @@ index.html              the page
 assets/css/style.css    all styles (light + dark)
 assets/js/data.js       note-type catalog: names, fields, format rules, examples, presets
 assets/js/app.js        picker, search, previews and prompt builder
-assets/previews/*.webp  front (-q) and back (-a) preview of every card
+assets/js/previews.js  front (-q) and back (-a) preview of every card, embedded as images
 assets/img/             favicon and social-share image
 .nojekyll               tells GitHub Pages to serve the files as they are
 ```
