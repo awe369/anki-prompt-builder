@@ -25,9 +25,10 @@
     <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="19" height="22" rx="4" fill="#9db4f5" transform="rotate(-10 13 18)"/><rect x="8" y="4" width="20" height="23" rx="4" fill="#2f5bd3"/><path d="M13 12h10M13 16h7M13 20h9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span>Anki Prompt Builder</span></a>
     <div class="navlinks">
       <a href="#builder">Builder</a>
+      <a href="#guide">Guide</a>
       <a href="#how">How it works</a>
       <a href="#faq">FAQ</a>
-      <a href="https://github.com/YOUR-USERNAME/anki-prompt-builder" rel="noopener">GitHub</a>
+      <a href="https://github.com/awe369" rel="noopener">GitHub</a>
       <button type="button" class="themebtn" id="themebtn" aria-label="Switch light / dark theme" title="Light / dark">◐</button>
       <a class="cta" href="#builder">Start</a>
     </div>
@@ -62,6 +63,17 @@
       <p class="step"><b>01</b> Note types chuno <span class="hint" id="ntcount"></span></p>
       <span class="hint">Search karo ki tumhari info kaisi hai — jaise <i>dates</i>, <i>map</i>, <i>article</i>, <i>numbers</i>, <i>process</i>, <i>statements</i>, <i>essay</i>. Ya subject ka ready set chuno.</span>
     </div>
+    <div class="pmbar" role="group" aria-label="Prompt type">
+      <button type="button" class="pmbtn" data-pm="mine" aria-pressed="true"><b>🎨 Mere note types</b><span>Tumhare apne designs (84 types) — preview dekh kar chuno</span></button>
+      <button type="button" class="pmbtn" data-pm="uni" aria-pressed="false"><b>🌐 Universal prompt</b><span>Kisi bhi Anki par chalega — built-in Basic / Cloze / Table cloze</span></button>
+    </div>
+    <div id="uniWrap" hidden>
+      <div class="sec uni">
+        <h3>🌐 Universal cards <small>Anki ke built-in <b>Basic</b> aur <b>Cloze</b> note type use hote hain — jinke paas tumhare note types nahi hain, unke Anki mein bhi seedha import ho jayega. Jo chahiye tick karo.</small></h3>
+        <div class="rows" id="urows"></div>
+      </div>
+    </div>
+    <div id="mineWrap">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input type="text" id="q" placeholder="Kaunsi info yaad karni hai? e.g. rivers states, saal tarikh, article text, causes" aria-label="Search note types" autocomplete="off">
@@ -99,6 +111,7 @@
       </div>
     </div>
     <div class="cats" id="cats"></div>
+    </div>
   </section>
 
   <div class="grid">
@@ -178,10 +191,17 @@
       <figure><figcaption>Front (question)</figcaption><img id="mv-q" alt="Front side in Anki"></figure>
       <figure><figcaption>Back (answer)</figcaption><img id="mv-a" alt="Back side in Anki"></figure>
     </div>
+    <div class="mv-guide" id="mv-guide"></div>
     <div class="mv-foot"><span class="hint">Preview tumhare apne note type ke design (light mode) se bana hai, sample content ke saath.</span><button type="button" class="btn" id="mv-pick"></button></div>
   </div>
 </dialog>
 
+
+<section class="band spaced" id="guide">
+  <div class="section-h"><h2>📘 Card banane ki guide</h2><p>Har note type ko Anki mein <b>khud haath se</b> kaise banayein — kaunse field mein kya likhna hai, example ke saath, aur card Anki mein kaisa dikhega. Kisi bhi card par tap karo.</p></div>
+  <div class="search gsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="text" id="gq" placeholder="Card dhundo — timeline, map, statement, table…" aria-label="Search guide" autocomplete="off"></div>
+  <div id="guidelist"></div>
+</section>
 
 <section class="band spaced" id="how">
   <div class="section-h"><h2>How it works</h2><p>Four steps, about two minutes. Works with any AI that can read your file.</p></div>
@@ -196,7 +216,9 @@
 <section class="band spaced" id="faq">
   <div class="section-h"><h2>FAQ</h2></div>
   <div class="faq">
+    <details><summary>Main khud card kaise banaun?</summary><p>Har card ke neeche <b>ℹ️ Kaise banayein</b> dabao, ya upar menu se <b>Guide</b> section kholo. Har note type ke liye step-by-step tareeka, har field ka example aur ek “copy as import file” button hai.</p></details>
     <details><summary>Will it create new note types in my Anki?</summary><p>No. The prompt uses the exact names and field order of your existing note types, and the file header tells Anki which note type each line belongs to.</p></details>
+    <details><summary>I don’t have your note types. Can I still use it?</summary><p>Yes. Switch to <b>🌐 Universal prompt</b> at the top of the builder. It uses Anki’s built-in <b>Basic</b> and <b>Cloze</b> note types (simple cloze, basic and table cloze), which every Anki has, with context, explanation and a memory trick on the back of every card.</p></details>
     <details><summary>Smart Basic / Smart Cloze — whole or specific modes?</summary><p>By default the whole note type is selected, and the AI picks the best mode for every fact. Tap “Specific modes chuno” to keep only the modes you want.</p></details>
     <details><summary>Why does Anki not ask me for a deck?</summary><p>Choose “Import ke time main chunoonga” in the deck settings — the file then has no deck column and Anki shows the Deck dropdown.</p></details>
     <details><summary>Do the previews show my real card design?</summary><p>Yes. Each preview is your note type rendered by Anki's own engine with sample content (light mode). Interactive cards are shown as they first open.</p></details>

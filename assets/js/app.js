@@ -29,11 +29,18 @@
     var hasMn = f.indexOf("Mnemonics") > -1, hasSrc = f.indexOf("Source") > -1;
     var o = {}; for (var x in t) o[x] = t[x];
     o.name = cs.name; o.fields = f; o.tr = hasMn ? "Mnemonics" : "Extra";
-    o.spec = ["- Text: one full, self-contained sentence with ONE blank `{{c1::answer::hint}}`. Extra: the explanation" + (hasMn ? ". Mnemonics: the memory trick only." : ", ending with `🧠 <b>Trick:</b> …`.") + (hasSrc ? " Source: book / chapter." : " Put `📚 <source>` as the last line of Extra (no Source field).")];
+    o.spec = ["- Text: ONE blank `{{c1::answer::hint}}` per note. **Mix two styles 50 / 50** (alternate them through the deck):",
+      "  - **Question style (half the notes):** a direct question, then the blank as its answer on the next line — `Q: Which Article of the Constitution abolishes untouchability?<br>{{c1::Article 17::Article number?}}`.",
+      "  - **Fill-in-the-blank style (other half):** one full, self-contained sentence with the blank inside it — `Untouchability is abolished by {{c1::Article 17::Article number?}} of the Constitution.`",
+      "- **The back is never empty.** Extra always has: `<b>Context:</b>` where this fact belongs (topic / Act / chapter, and why exams ask it) · `<b>Explanation:</b>` 2–3 simple lines a first-timer understands · " + (hasMn ? "and the memory trick goes in **Mnemonics** (never empty)." : "`🧠 <b>Trick:</b>` the memory trick (never empty)."),
+      "- " + (hasSrc ? "Source: book / chapter." : "Put `📚 <source>` as the last line of Extra (no Source field).")];
     var ex = {}; f.forEach(function (k) { if (t.ex.f[k] !== undefined) ex[k] = t.ex.f[k]; });
     if (!hasMn) ex.Extra = (ex.Extra || "") + "<br>🧠 <b>Trick:</b> " + t.ex.f.Mnemonics;
     if (!hasSrc) ex.Extra = (ex.Extra || "") + "<br>📚 " + t.ex.f.Source;
     o.ex = { tags: t.ex.tags, f: ex };
+    var ex2 = {}; for (var y in ex) ex2[y] = ex[y];
+    ex2.Text = "Q: Which organelle is called the <b>powerhouse of the cell</b>?<br>{{c1::Mitochondrion::Which organelle?}}";
+    o.ex2 = { tags: t.ex.tags, f: ex2 };
     return o;
   }
   function label(t) { if (t.grp) return t.name + " · " + t.mlabel; return t.k === "cloze" ? "❤️ Cloze (" + STYLE_LABEL[$("cstyle").value] + ")" : t.name; }
@@ -52,12 +59,12 @@
       return '<div class="tile' + (on ? " on" : "") + '" data-tile="' + t.k + '">' +
         '<button type="button" class="shot" data-view="' + t.k + '" aria-label="Preview ' + esc(label(t)) + '"><img loading="lazy" src="' + img(t, "q") + '" alt="' + esc(label(t)) + ' front side"><span class="zoom">👁 Front / Back</span></button>' +
         '<label class="tpick"><input type="checkbox" data-k="' + t.k + '"' + (on ? " checked" : "") + '><span class="tname">' + esc(label(t)) + star + '</span></label>' +
-        '<span class="tbest">' + esc(t.best) + '</span>' + pills + '</div>';
+        '<span class="tbest">' + esc(t.best) + '</span>' + pills + gbtn(t.k) + '</div>';
     }
     return '<div class="trow"><label class="tpick"><input type="checkbox" data-k="' + t.k + '"' + (on ? " checked" : "") + '>' +
       '<span class="tname">' + esc(label(t)) + star + '</span></label>' +
       '<button type="button" class="eye" data-view="' + t.k + '" aria-label="Preview ' + esc(label(t)) + '">👁</button>' +
-      '<span class="tbest">' + esc(t.best) + '</span>' + pills + '</div>';
+      '<span class="tbest">' + esc(t.best) + '</span>' + pills + gbtn(t.k) + '</div>';
   }
   function gstate(g) { var ks = gk(g), n = ks.filter(function (k) { return SEL.indexOf(k) > -1; }).length; return { n: n, all: ks.length, ks: ks }; }
   function grow(g) {
@@ -68,7 +75,7 @@
     if (VIEW === "gallery") {
       return '<div class="tile gtile' + (s.n ? " on" : "") + '" data-gtile="' + g + '">' +
         '<button type="button" class="shot" data-view="' + G.rep + '" data-viewg="' + g + '" aria-label="Preview ' + esc(G.name) + '"><img loading="lazy" src="' + src(G.rep + '-q') + '" alt="' + esc(G.name) + ' front side"><span class="zoom">👁 Front / Back</span></button>' +
-        head + '<span class="tbest">' + esc(G.best) + '</span>' + btn + '</div>';
+        head + '<span class="tbest">' + esc(G.best) + '</span>' + btn + gbtn(G.rep) + '</div>';
     }
     return '<div class="trow gtile" data-gtile="' + g + '">' + head + '<button type="button" class="eye" data-view="' + G.rep + '" data-viewg="' + g + '" aria-label="Preview ' + esc(G.name) + '">👁</button><span class="tbest">' + esc(G.best) + '</span>' + btn + '</div>';
   }
@@ -84,6 +91,7 @@
     $("mv-pick").setAttribute("data-k2", VIEWG ? "g:" + VIEWG : k);
     $("mv-pick").textContent = sel1 ? "✓ Selected — hatao" : (VIEWG ? "+ Saare modes chuno" : "+ Ye card chuno");
     $("mv-pick").classList.toggle("done", sel1);
+    fillGuide(k);
     var d = $("mv"); if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
   }
   function drawPicker() {
@@ -352,9 +360,11 @@
       var tg = t.ex.tags || "Topic";
       if (m === "fixed") row.push(deck); else if (m === "sub") row.push(deck + "::" + (tg.split(" ")[0].split("::")[1] || "Topic").replace(/_/g, " "));
       row.push(tg);
-      var f = t.fields.map(function (k) { return t.ex.f[k] || ""; });
-      while (f.length && !f[f.length - 1]) f.pop();
-      L.push(row.concat(f).join("→"));
+      [t.ex].concat(t.ex2 ? [t.ex2] : []).forEach(function (e) {
+        var f = t.fields.map(function (k) { return e.f[k] || ""; });
+        while (f.length && !f[f.length - 1]) f.pop();
+        L.push(row.concat(f).join("→"));
+      });
     });
     L.push("```");
     L.push("(Examples show the layout only — write your own content from MY source.)");
@@ -363,6 +373,7 @@
     L.push("- [ ] Header exactly as in Part E; every line starts with " + (NT.length === 1 ? "exactly " + nm(NT[0]) : "one of: " + NT.map(nm).join(", ")) + ".");
     L.push("- [ ] Field count and order match Part B for each type; no TAB/newline inside a field; no field starts with `\"`.");
     if (normalCloze.length) L.push("- [ ] EVERY normal cloze has a hint; no answer leaks.");
+    if (has("cloze")) L.push("- [ ] Simple cloze notes: about half question style, half fill-in-the-blank; every back has Context + Explanation + Trick.");
     if (tlcT.length) L.push("- [ ] " + tlcT.map(nm).join(", ") + ": every blank starts with `#`; both halves of every row are clozed; Extra rows and Data objects match the event rows one-for-one, in the same order; every `why` is filled.");
     if (dateT.length) L.push("- [ ] Dated notes: correct order, one date format, no invented dates.");
     L.push("- [ ] Each piece of information sits in the most fitting type; no fact repeated across types.");
@@ -375,18 +386,130 @@
     return L.join("\n");
   }
 
+
+  /* ---------------- universal prompt (Anki's built-in Basic / Cloze) ---------------- */
+  var PM = "mine";
+  var UT = { cloze: true, basic: true, table: false };
+  var UEX = {
+    cloze: [["Biology::Cell", ["Cloze", "The organelle that makes most of a cell's energy (ATP) is the {{c1::mitochondrion::Which organelle?}}.", "<b>Context:</b> Cell organelles — NCERT Class 11 Biology, <i>Cell: The Unit of Life</i>; a regular Prelims fact.<br><b>Explanation:</b> Mitochondria carry out aerobic respiration and release energy as ATP. They even have their own DNA and ribosomes.<br>🧠 <b>Trick:</b> Mighty-chondria = mighty power.<br>📚 NCERT XI Biology"]],
+            ["Polity::FR", ["Cloze", "Q: Which Article of the Constitution abolishes <b>untouchability</b>?<br>{{c1::Article 17::Article number?}}", "<b>Context:</b> Right to Equality block (Articles 14–18), Part III.<br><b>Explanation:</b> Article 17 abolishes untouchability and forbids its practice in any form; it is enforced through the Protection of Civil Rights Act, 1955.<br>🧠 <b>Trick:</b> 14–18 = equality; 17 sits just before 18 (abolition of titles).<br>📚 Laxmikanth"]]],
+    basic: [["Polity::Parliament", ["Basic", "Who presides over a <b>joint sitting</b> of the two Houses of Parliament?", "<b>The Speaker of the Lok Sabha</b> (Art 108)<hr><b>Context:</b> Joint sittings resolve a deadlock on an ordinary bill.<br><b>Explanation:</b> If the Speaker is absent, the Deputy Speaker presides, then the Deputy Chairman of the Rajya Sabha. Not available for Money Bills or Constitution Amendment Bills.<br>🧠 <b>Trick:</b> Lok Sabha is bigger, so its Speaker runs the joint show.<br>📚 Laxmikanth"]]],
+    table: [["Polity::Writs", ["Cloze", "<b>Writs and their meaning</b><br><table><tr><th>Writ</th><th>Literal meaning</th><th>Lies against</th></tr><tr><td>Habeas corpus</td><td>{{c1::To have the body::Literal meaning?}}</td><td>Public authorities and private persons</td></tr><tr><td>Mandamus</td><td>{{c2::We command::Literal meaning?}}</td><td>Public officials, not the President or Governors</td></tr><tr><td>Quo warranto</td><td>{{c3::By what authority::Literal meaning?}}</td><td>Holders of a public office</td></tr></table>", "<b>Context:</b> Writ jurisdiction — Article 32 (Supreme Court) and Article 226 (High Courts).<br><b>Explanation:</b> Each writ is a court order for a specific wrong: unlawful detention, a public duty not done, or an office held without authority.<br>🧠 <b>Trick:</b> Body → Command → Authority: “Habeas holds, Mandamus makes, Quo questions”.<br>📚 Laxmikanth"]]]
+  };
+  function drawUni() {
+    var U = [["cloze", "Simple cloze", "Ek blank — aadhe cards sawal (Q: …?) aur aadhe fill-in-the-blank. Back par context, explanation, trick."],
+             ["basic", "Basic", "Sawal → bold jawab; neeche context, explanation, trick."],
+             ["table", "Table cloze", "Table ke cells blank — comparisons, Article/year groups ke liye."]];
+    $("urows").innerHTML = U.map(function (u) {
+      return '<div class="tile' + (UT[u[0]] ? " on" : "") + '"><button type="button" class="shot" data-uview="' + u[0] + '" aria-label="Preview ' + u[1] + '"><img loading="lazy" src="' + src("u-" + u[0] + "-q") + '" alt="' + u[1] + ' front side"><span class="zoom">👁 Front / Back</span></button>' +
+        '<label class="tpick"><input type="checkbox" id="u-' + u[0] + '" data-u="' + u[0] + '"' + (UT[u[0]] ? " checked" : "") + '><span class="tname">' + u[1] + '</span></label><span class="tbest">' + u[2] + '</span><span class="tsub"><span class="pill">Any Anki</span><span class="pill">All subjects</span></span><button type="button" class="ibtn" data-guide-u="' + u[0] + '">ℹ️ Kaise banayein</button></div>';
+    }).join("");
+  }
+  function buildU() {
+    var v = {}; ids.forEach(function (k) { v[k] = $(k).value.trim(); });
+    var m = mode(), pyq = $("pyq").checked;
+    var X = { ncert: $("x-ncert").checked, wiki: $("x-wiki").checked, ca: $("x-ca").checked, pib: $("x-pib").checked };
+    var extra = X.ncert || X.wiki || X.ca || X.pib;
+    var xNames = [X.ncert && "NCERT", X.wiki && "Wikipedia", X.ca && "current affairs", X.pib && "PIB"].filter(Boolean);
+    var on = ["cloze", "basic", "table"].filter(function (k) { return UT[k]; }); if (!on.length) on = ["cloze", "basic"];
+    var useCloze = on.indexOf("cloze") > -1 || on.indexOf("table") > -1, useBasic = on.indexOf("basic") > -1;
+    var deck = v.deck || "My Deck";
+    var LBL = { cloze: "simple cloze", basic: "basic Q → A", table: "table cloze" };
+    var sizeTxt = { auto: "auto — small topic 30–50 cards, medium 50–90, large 100–150+; never pad, never cut real facts", few: "only the most important facts, about 30 cards", medium: "about 50–90 cards", max: "maximum coverage — every testable fact" }[v.size];
+    var L = [];
+    L.push("You are an expert teacher and Anki card designer. Turn the attached material into the **best possible Anki cards**. Imagine a student who has **never studied this topic** and learns it **only from these cards** — every card must make sense on its own and be easy to remember.");
+    L.push("");
+    L.push("## MY SETTINGS");
+    L.push("- **Today's date:** " + (niceDate(v.date) || "[not given]"));
+    L.push("- **Exam / purpose:** " + (v.exam || "general understanding") + " · **Language:** " + (v.lang || "English"));
+    L.push("- **Card kinds:** " + on.map(function (k) { return LBL[k]; }).join(", "));
+    L.push("- **Amount:** " + sizeTxt);
+    L.push("- **Deck:** " + (m === "ask" ? "I will choose it while importing" : m === "sub" ? deck + " (parent) with topic sub-decks" : deck));
+    L.push("- **Extra cards:** " + (extra ? "yes — from " + xNames.join(", ") : "no"));
+    if (v.topic) L.push("- **Source / topic:** " + v.topic);
+    if (v.wish) L.push("- **Special instructions:** " + v.wish);
+    L.push("");
+    L.push("## 1. Read and check");
+    L.push("- Read the WHOLE source (PDF, image, transcript, book, notes). For images/scans read every label and table. For transcripts ignore filler. For MCQs/PYQs extract the fact being tested" + (pyq ? " and note exam + year." : "."));
+    L.push("- First show me the topics you found and how many cards of each kind you plan, then continue without waiting.");
+    L.push("- Fact-check everything against standard books (NCERT etc.). If the source is wrong, write the correct fact and tag `Src::Corrected`. Never invent anything; list doubts in the summary.");
+    L.push("");
+    L.push("## 2. Note types — Anki's built-in ones (every Anki has them)");
+    if (useBasic) L.push("- **`Basic`** — fields **Front | Back**.");
+    if (useCloze) L.push("- **`Cloze`** — fields **Text | Back Extra**.");
+    L.push("");
+    L.push("## 3. How to write each card");
+    if (on.indexOf("cloze") > -1) {
+      L.push("### Simple cloze → note type `Cloze`");
+      L.push("- ONE blank per note: `{{c1::answer::hint}}`. The hint is a short question saying what to recall (`::Which organelle?`, `::Article number?`, `::Which year?`), never the answer itself or its first letter.");
+      L.push("- **Mix two styles 50 / 50:** half the notes as a **direct question** with the blank as the answer — `Q: Which Article abolishes untouchability?<br>{{c1::Article 17::Article number?}}` — and half as a **fill-in-the-blank sentence** — `Untouchability is abolished by {{c1::Article 17::Article number?}}.`");
+      L.push("- **Back Extra is never empty**: `<b>Context:</b> …<br><b>Explanation:</b> …<br>🧠 <b>Trick:</b> …<br>📚 source`.");
+      L.push("");
+    }
+    if (useBasic) {
+      L.push("### Basic → note type `Basic`");
+      L.push("- **Front:** a clear, self-contained question (context inside it — “In the Indian Constitution, …”). Mix What / Why / How / Which-is-not questions.");
+      L.push("- **Back:** the answer in **bold** on the first line, then `<hr>`, then `<b>Context:</b> …<br><b>Explanation:</b> …<br>🧠 <b>Trick:</b> …<br>📚 source`.");
+      L.push("");
+    }
+    if (on.indexOf("table") > -1) {
+      L.push("### Table cloze → note type `Cloze`");
+      L.push("- **Text:** a bold title line, then an HTML table on ONE line: `<table><tr><th>…</th><th>…</th></tr><tr><td>row label</td><td>{{c1::cell::hint}}</td></tr>…</table>`.");
+      L.push("- First row = headers (`<th>`). Keep the row labels visible; blank the answer cells — each cell its own number (c1, c2, c3 …), every blank with a question hint. 3–6 rows, 2–4 columns. Use it for comparisons and “X → its Article / year / state” groups.");
+      L.push("- **Back Extra:** `<b>Context:</b> …<br><b>Explanation:</b> …<br>🧠 <b>Trick:</b> …` for the whole table.");
+      L.push("");
+    }
+    L.push("### Rules for every card");
+    L.push("- **Context, explanation and memory trick on the back of EVERY card** — never empty. Explanation in 2–3 simple lines; trick = acronym, story, word link, number hook or Hindi/English sound-alike, accurate and one line.");
+    L.push("- One fact per card (a table holds one connected group). No “which of the above”, no MCQ wording, no typed-answer cards. Never ask the same fact twice" + (pyq ? "; merge repeats and list all PYQs on the back (`<b>PYQ:</b> UPSC 2019, UPPSC 2021`)." : "."));
+    L.push("- **Bold** the key words; add Hindi names in brackets where useful. Facts that change over time: write “as of <month year>”.");
+    L.push("");
+    if (extra) {
+      L.push("## 4. Extra cards");
+      L.push("Add **15–25 %** extra cards beyond the source (same rules, tag `Extra`): " + [X.ncert && "**NCERT** (tag `Src::NCERT`)", X.wiki && "**Wikipedia** stable facts (tag `Src::Wiki`)", X.ca && "**current affairs** up to " + (niceDate(v.date) || "today") + " with the date written in the card (tag `Src::CA::<YYYY>`)", X.pib && "**PIB** releases with exact names, numbers and release date (tag `Src::PIB`)"].filter(Boolean).join("; ") + "." + ((X.ca || X.pib) ? " Use web search if you have it; never invent news." : "") + (m !== "ask" ? " Put them in `" + deck + "::Extra`." : ""));
+      L.push("");
+    }
+    L.push("## " + (extra ? "5" : "4") + ". Output — one file `anki_import.txt` (or one code block)");
+    L.push("```"); L.push("#separator:tab"); L.push("#html:true"); L.push("#notetype column:1");
+    if (m === "ask") L.push("#tags column:2"); else { L.push("#deck column:2"); L.push("#tags column:3"); }
+    L.push("```");
+    L.push("One note per line: `NoteType <TAB> " + (m === "ask" ? "" : "Deck <TAB> ") + "Tags <TAB> fields…`. " + (m === "fixed" ? "Deck is always `" + deck + "`. " : m === "sub" ? "Deck = `" + deck + "::<Topic>` (3–8 short topic sub-decks). " : "No deck column. ") + "Tags space-separated, `::` for levels. No real line breaks or TABs inside a field (use `<br>`); never start a field with `\"`. HTML only `<b> <i> <u> <br> <hr> <sub> <sup>`" + (on.indexOf("table") > -1 ? " and, for table cloze, `<table> <tr> <th> <td>` (no style attributes)." : "."));
+    L.push("");
+    L.push("Example lines (→ means a TAB):");
+    L.push("```");
+    on.forEach(function (k) {
+      UEX[k].forEach(function (e) {
+        var row = [e[1][0]];
+        if (m === "fixed") row.push(deck); else if (m === "sub") row.push(deck + "::" + (e[0].split("::")[1] || "Topic"));
+        row.push(e[0]);
+        L.push(row.concat(e[1].slice(1)).join("→"));
+      });
+    });
+    L.push("```");
+    L.push("");
+    L.push("## " + (extra ? "6" : "5") + ". Final check, then a short summary");
+    L.push("- Every line starts with `" + (useBasic && useCloze ? "Basic` or `Cloze" : useBasic ? "Basic" : "Cloze") + "`; field count right; every blank has a question hint; no answer leaks." + (on.indexOf("cloze") > -1 ? " Simple cloze ≈ half question style, half fill-in-the-blank." : "") + " Every back has Context + Explanation + Trick.");
+    L.push("- Summary: cards per kind and topic" + (extra ? ", extra cards and the date current affairs are verified up to" : "") + ", errors corrected, anything unclear.");
+    L.push("");
+    L.push("_Import: Anki → File → Import → `anki_import.txt`. If your Anki is in another language, rename `Basic` / `Cloze` in the file to your built-in names._");
+    return L.join("\n");
+  }
+
   /* ---------------- state ---------------- */
   function render() {
     $("deckfield").hidden = mode() === "ask";
-    var t = build();
+    var t = PM === "uni" ? buildU() : build();
     $("preview").textContent = t;
-    $("stats").textContent = t.split(/\s+/).length.toLocaleString() + " words · " + SEL.length + " note types";
+    $("stats").textContent = t.split(/\s+/).length.toLocaleString() + " words · " + (PM === "uni" ? "universal prompt" : SEL.length + " note types");
+    $("mineWrap").hidden = PM === "uni"; $("uniWrap").hidden = PM !== "uni";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-pm]"), function (b) { b.classList.toggle("on", b.getAttribute("data-pm") === PM); b.setAttribute("aria-pressed", b.getAttribute("data-pm") === PM); });
+    ["cloze", "basic", "table"].forEach(function (k) { var i = $("u-" + k); if (i) { i.checked = UT[k]; i.closest(".tile").classList.toggle("on", UT[k]); } });
     var un = {}; D.types.forEach(function (x) { if (x.name) un[x.name] = 1; }); $("ntcount").textContent = "· " + (Object.keys(un).length + Object.keys(D.cstyles).length) + " note types · " + D.types.filter(function (x) { return x.grp; }).length + " Smart modes";
     save();
   }
   function save() {
     try {
-      var s = { deckmode: mode(), sel: SEL, view: VIEW, exp: EXP };
+      var s = { deckmode: mode(), sel: SEL, view: VIEW, exp: EXP, pm: PM, ut: UT };
       ids.forEach(function (k) { if (k !== "date") s[k] = $(k).value; });
       checks.forEach(function (k) { s[k] = $(k).checked; });
       localStorage.setItem(KEY, JSON.stringify(s));
@@ -398,6 +521,8 @@
     var r = document.querySelector('input[name="deckmode"][value="' + (s.deckmode || "ask") + '"]'); if (r) r.checked = true;
     if (s.sel) SEL = s.sel.filter(function (k) { return BYK[k]; });
     if (s.view) VIEW = s.view;
+    if (s.pm) PM = s.pm;
+    if (s.ut) UT = { cloze: !!s.ut.cloze, basic: !!s.ut.basic, table: !!s.ut.table };
     if (s.exp) { EXP.smartbasic = !!s.exp.smartbasic; EXP.smartcloze = !!s.exp.smartcloze; }
   }
 
@@ -405,9 +530,11 @@
   $("presets").innerHTML += Object.keys(D.presets).map(function (p) { return '<button type="button" class="mini" data-preset="' + esc(p) + '">' + esc(p) + '</button>'; }).join("") + '<button type="button" class="mini" id="clearsel">Clear</button>';
   $("date").value = today();
   try { var saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) load(saved); } catch (e) {}
-  setView(); drawPicker(); syncChecks();
+  setView(); drawPicker(); syncChecks(); drawUni();
 
   document.addEventListener("change", function (e) {
+    var uk = e.target.getAttribute && e.target.getAttribute("data-u");
+    if (uk) { UT[uk] = e.target.checked; render(); return; }
     var g = e.target.getAttribute && e.target.getAttribute("data-g");
     if (g) { setGroup(g, e.target.checked); return; }
     var k = e.target.getAttribute && e.target.getAttribute("data-k");
@@ -426,8 +553,16 @@
     if (b) { VIEWG = b.getAttribute("data-viewg"); openView(b.getAttribute("data-view")); return; }
     var xb = e.target.closest ? e.target.closest("[data-exp]") : null;
     if (xb) { var xg = xb.getAttribute("data-exp"); EXP[xg] = !EXP[xg]; drawPicker(); syncChecks(); save(); if (EXP[xg]) $("mp-" + xg).scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
+    if (e.target.id === "mv-pick" && e.target.getAttribute("data-k2").indexOf("u:") === 0) { var u2 = e.target.getAttribute("data-k2").slice(2); UT[u2] = !UT[u2]; render(); e.target.textContent = UT[u2] ? "✓ Selected — hatao" : "+ Ye card chuno"; e.target.classList.toggle("done", UT[u2]); return; }
     if (e.target.id === "mv-pick") { var k = e.target.getAttribute("data-k2"); if (k.indexOf("g:") === 0) { var gg = k.slice(2), st = gstate(gg); setGroup(gg, st.n < st.all); VIEWG = gg; openView(GRP[gg].rep); } else { toggle(k, SEL.indexOf(k) < 0); VIEWG = null; openView(k); } return; }
     if (e.target.id === "mv-close" || e.target.id === "mv") { var d = $("mv"); if (d.close) d.close(); else d.removeAttribute("open"); }
+    var pmb = e.target.closest ? e.target.closest("[data-pm]") : null;
+    if (pmb) { PM = pmb.getAttribute("data-pm"); render(); return; }
+    var uv = e.target.closest ? e.target.closest("[data-uview]") : null;
+    if (uv) { var uk2 = uv.getAttribute("data-uview"), UL = { cloze: "Universal · Simple cloze (Anki Cloze)", basic: "Universal · Basic (Anki Basic)", table: "Universal · Table cloze (Anki Cloze)" };
+      $("mv-title").textContent = UL[uk2]; $("mv-best").textContent = "Anki ka built-in note type — kisi bhi Anki mein chalega."; $("mv-fields").textContent = "Fields: " + (uk2 === "basic" ? "Front · Back" : "Text · Back Extra");
+      $("mv-q").src = src("u-" + uk2 + "-q"); $("mv-a").src = src("u-" + uk2 + "-a"); $("mv-pick").setAttribute("data-k2", "u:" + uk2); $("mv-pick").textContent = UT[uk2] ? "✓ Selected — hatao" : "+ Ye card chuno"; $("mv-pick").classList.toggle("done", !!UT[uk2]);
+      var dd = $("mv"); if (dd.showModal) { if (!dd.open) dd.showModal(); } else dd.setAttribute("open", ""); return; }
     var ga = e.target.getAttribute && e.target.getAttribute("data-grpall");
     if (ga) { var ks = D.types.filter(function (x) { return x.grp === ga; }).map(function (x) { return x.k; }); var all = ks.every(function (k) { return SEL.indexOf(k) > -1; }); ks.forEach(function (k) { var i = SEL.indexOf(k); if (all && i > -1) SEL.splice(i, 1); if (!all && i < 0) SEL.push(k); }); syncChecks(); render(); return; }
     var vb = e.target.closest ? e.target.closest("[data-v]") : null;
@@ -456,5 +591,103 @@
       $("msg").textContent = fn + " download ho gaya.";
     } catch (e) { $("msg").textContent = "Download nahi ho paya — Copy prompt use karo."; }
   });
+
+  /* ================= 📘 CARD-MAKING GUIDE ================= */
+  var CZTIP = {
+    none: "Is note type mein cloze <code>{{c1::…}}</code> <b>nahi</b> lagta — bas fields bharo, card khud ban jayega.",
+    one: "Sirf <b>ek</b> blank: answer select karo → <kbd>Ctrl/Cmd + Shift + C</kbd>. Fir <code>::</code> ke baad hint likho (sawal ki tarah).",
+    multi: "Har blank alag number: pehla blank <kbd>Ctrl/Cmd + Shift + C</kbd> (c1), agla bhi wahi shortcut (c2, c3…). Har blank ke baad <code>::hint?</code> likho. Har number ka ek alag card banta hai.",
+    trap: "<code>{{c1::SAHI::GALAT}}</code> — doosre <code>::</code> ke baad wo <b>galat value</b> likho jisse log confuse hote hain (hint nahi). Card kabhi sahi, kabhi galat dikhata hai.",
+    slot: "<code>{{c1::ANSWER::galat1|galat2|galat3}}</code> — doosre <code>::</code> ke baad 3 galat options <code>|</code> se alag karke.",
+    tfv: "Har statement ek cloze mein: <code>{{c1:: … }}</code>. Andar <code>[[sahi|galat|galat]]</code> (pehla = sahi) aur <code>[[A~B~C]]</code> (koi bhi chalega).",
+    tlc: "Har answer <b><code>#</code></b> se shuru: <code>{{c1::#1526}}</code>. Date aur event dono ko alag number do. Date blank par hint nahi."
+  };
+  function dec(s) { var x = document.createElement("textarea"); x.innerHTML = s; return x.value; }
+  function isRich(v) { return /<(ol|ul|li|table|div|hr)\b/i.test(v); }
+  function readable(v) { return dec(String(v).replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, "")); }
+  function code(s) { return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>"); }
+  var GCOPY = [];
+  function gcopy(txt) { GCOPY.push(txt); return GCOPY.length - 1; }
+  function guideHTML(o) {
+    GCOPY = [];
+    var h = '<div class="gd-head"><h3>🛠 Khud kaise banayein</h3><span class="hint">Anki mein ye card haath se banane ka tareeka — example ke saath.</span></div>';
+    h += '<ol class="gd-steps">' +
+      '<li>Anki kholo → <b>Add</b> (<kbd>A</kbd>) dabao.</li>' +
+      '<li><b>Type</b> mein ye note type chuno: <code class="nt">' + esc(o.name) + '</code> <button type="button" class="mini gcp" data-gc="' + gcopy(o.name) + '">Copy naam</button></li>' +
+      '<li>Neeche diye example ki tarah har <b>field</b> bharo. Nayi line ke liye <kbd>Enter</kbd> dabao.</li>' +
+      '<li><b>Tags</b> mein likho: <code>' + esc(o.tags || "Topic") + '</code>' + (o.mtag ? ' — <b><code>' + esc(o.mtag) + '</code> tag zaroori hai</b>, isi se card ka roop (mode) badalta hai.' : ' (topic ke hisaab se).') + '</li>' +
+      '<li><b>Add</b> dabao. Card ready!</li></ol>';
+    h += '<p class="gd-tip">💡 ' + (CZTIP[o.cz] || CZTIP.none) + '</p>';
+    h += '<div class="gd-fields">';
+    o.fields.forEach(function (f, i) {
+      var v = o.ex[f] || "";
+      var rich = isRich(v);
+      h += '<div class="gd-f"><div class="gd-fn"><b>' + (i + 1) + '. ' + esc(f) + '</b>' + (v ? '<button type="button" class="mini gcp" data-gc="' + gcopy(v) + '">Copy HTML</button>' : '<span class="hint">khaali chhod sakte ho</span>') + '</div>' +
+        (v ? '<pre class="gd-v">' + esc(rich ? v : readable(v)) + '</pre>' + (rich ? '<span class="hint">Is field mein HTML hai — field par click karo, <kbd>Ctrl/Cmd + Shift + X</kbd> (HTML editor) kholo aur “Copy HTML” wala text paste karo.</span>' : '') : '') + '</div>';
+    });
+    h += '</div>';
+    if (o.spec && o.spec.length) h += '<details class="gd-rules"><summary>📏 Format ke rules (detail)</summary><div>' + o.spec.map(function (s) { return '<p>' + code(s.replace(/^\s*-\s*/, "")) + '</p>'; }).join("") + '</div></details>';
+    if (o.modes) h += '<div class="gd-modes"><b>Is note type ke saare modes</b> <span class="hint">— tag badlo, card ka roop badal jayega. Kisi par tap karke uska example dekho:</span><div class="gd-mlist">' + o.modes.map(function (m) { return '<button type="button" class="mini" data-guide="' + m.k + '">' + esc(m.mlabel) + (m.mtag ? ' · <code>' + esc(m.mtag) + '</code>' : ' · no tag') + '</button>'; }).join("") + '</div></div>';
+    var line = [o.name, o.tags || "Topic"].concat(o.fields.map(function (f) { return (o.ex[f] || "").replace(/\t/g, " "); }));
+    while (line.length > 2 && !line[line.length - 1]) line.pop();
+    var file = "#separator:tab\n#html:true\n#notetype column:1\n#tags column:2\n" + line.join("\t") + "\n";
+    h += '<div class="gd-imp"><button type="button" class="btn ghost gcp" data-gc="' + gcopy(file) + '">📋 Example ko import-file ki tarah copy karo</button><span class="hint">Text editor mein paste karke <code>.txt</code> save karo → Anki → File → Import. Card turant dikh jayega.</span></div>';
+    h += '<p class="gd-tip">✍️ <b>Bold</b> = <kbd>Ctrl/Cmd + B</kbd> · Upar <b>Front</b> / <b>Back</b> image = yahi example Anki mein kaisa dikhta hai.</p>';
+    return h;
+  }
+  function guideFor(k) {
+    var t = BYK[k]; if (!t) return null;
+    var r = R(t), o = { name: r.name, fields: r.fields, ex: r.ex.f, tags: r.ex.tags, spec: r.spec, cz: r.cz, mtag: t.mtag || "" };
+    if (t.grp) o.modes = D.types.filter(function (x) { return x.grp === t.grp; });
+    return o;
+  }
+  function fillGuide(k) { var o = guideFor(k); $("mv-guide").innerHTML = o ? guideHTML(o) : ""; }
+  function fillGuideU(u) {
+    var e = UEX[u][UEX[u].length - 1], f = e[1];
+    var o = { name: f[0], tags: e[0], fields: f[0] === "Basic" ? ["Front", "Back"] : ["Text", "Back Extra"], ex: {}, cz: u === "basic" ? "none" : (u === "table" ? "multi" : "one"), spec: [] };
+    o.ex[o.fields[0]] = f[1]; o.ex[o.fields[1]] = f[2];
+    if (u === "table") o.spec = ["Table banane ke liye: field par click → `Ctrl/Cmd + Shift + X` (HTML editor) → `<table>` code paste karo; ya Anki ke editor mein table bana kar har answer-cell ko select karke cloze (Ctrl/Cmd + Shift + C, phir agla number) lagao. Row ke naam (pehla column) visible rakho."];
+    if (u === "cloze") o.spec = ["Aadhe cards sawal ki tarah: `Q: …?` phir nayi line par blank. Aadhe normal sentence ke andar blank.", "Back Extra kabhi khaali nahi: Context + Explanation + 🧠 Trick."];
+    if (u === "basic") o.spec = ["Front: saaf sawal. Back: pehli line mein bold jawab, phir `<hr>`, phir Context + Explanation + 🧠 Trick."];
+    $("mv-guide").innerHTML = guideHTML(o);
+  }
+  function openGuide(k) { VIEWG = null; openView(k); setTimeout(function () { $("mv-guide").scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); }
+  function gbtn(k) { return '<button type="button" class="ibtn" data-guide="' + k + '" title="Ye card khud kaise banayein">ℹ️ Kaise banayein</button>'; }
+
+  function drawGuideSection() {
+    var box = $("guidelist"); if (!box) return;
+    var h = '<div class="gsec"><h3>🌐 Universal (Anki built-in)</h3><div class="glist">' +
+      [["cloze", "Simple cloze"], ["basic", "Basic"], ["table", "Table cloze"]].map(function (u) { return '<button type="button" class="gitem" data-guide-u="' + u[0] + '"><img loading="lazy" src="' + src("u-" + u[0] + "-q") + '" alt=""><span><b>' + u[1] + '</b><small>Kisi bhi Anki mein</small></span></button>'; }).join("") + '</div></div>';
+    var groups = [["✦ Smart Basic — modes", D.types.filter(function (t) { return t.grp === "smartbasic"; })], ["✦ Smart Cloze — layouts", D.types.filter(function (t) { return t.grp === "smartcloze"; })]];
+    D.cats.forEach(function (c) { groups.push([c.label, D.types.filter(function (t) { return t.cat === c.k && !t.grp; })]); });
+    groups.forEach(function (g) {
+      if (!g[1].length) return;
+      h += '<div class="gsec"><h3>' + esc(g[0]) + '</h3><div class="glist">' + g[1].map(function (t) {
+        return '<button type="button" class="gitem" data-guide="' + t.k + '"><img loading="lazy" src="' + img(t, "q") + '" alt=""><span><b>' + esc(t.grp ? t.mlabel : label(t)) + '</b><small>' + esc(t.best) + '</small></span></button>';
+      }).join("") + '</div></div>';
+    });
+    box.innerHTML = h;
+  }
+  function gfilter() {
+    var q = ($("gq").value || "").toLowerCase().trim();
+    Array.prototype.forEach.call(document.querySelectorAll("#guidelist .gitem"), function (b) { b.hidden = q && b.textContent.toLowerCase().indexOf(q) < 0; });
+    Array.prototype.forEach.call(document.querySelectorAll("#guidelist .gsec"), function (s) { s.hidden = !s.querySelector(".gitem:not([hidden])"); });
+  }
+  document.addEventListener("click", function (e) {
+    var c = e.target.closest ? e.target.closest(".gcp") : null;
+    if (c) { var txt = GCOPY[+c.getAttribute("data-gc")], old = c.textContent;
+      var done = function () { c.textContent = "Copied ✓"; setTimeout(function () { c.textContent = old; }, 1400); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () { window.prompt("Copy:", txt); }); else window.prompt("Copy:", txt);
+      return; }
+    var g = e.target.closest ? e.target.closest("[data-guide]") : null;
+    if (g) { openGuide(g.getAttribute("data-guide")); return; }
+    var gu = e.target.closest ? e.target.closest("[data-guide-u]") : null;
+    if (gu) { var u = gu.getAttribute("data-guide-u"), sh = document.querySelector('.shot[data-uview="' + u + '"]'); if (sh) sh.click(); setTimeout(function () { $("mv-guide").scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); return; }
+    var uv = e.target.closest ? e.target.closest("[data-uview]") : null;
+    if (uv) fillGuideU(uv.getAttribute("data-uview"));
+  });
+  if ($("gq")) $("gq").addEventListener("input", gfilter);
+  drawGuideSection();
+
   render();
 })();

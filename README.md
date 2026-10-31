@@ -7,7 +7,9 @@ You see how every card will look in Anki (front and back) before you pick it, ch
 ## Features
 
 - **84 note types + 21 Smart modes**, each with a real front/back preview rendered by Anki itself.
+- **🌐 Universal prompt** for anyone: uses Anki’s built-in Basic and Cloze note types — simple cloze (half question style, half fill-in-the-blank), basic and table cloze — with context, explanation and a memory trick on every back.
 - **Smart Basic and Smart Cloze** are selected as whole note types by default (the AI picks the best mode per fact); open *“Specific modes chuno”* to keep only certain modes.
+- **📘 Card-making guide** — every note type has an “ℹ️ Kaise banayein” button and a Guide section: step-by-step how to make the card by hand in Anki, each field with an example, format rules, and a one-click “copy as import file”.
 - **Search by kind of information** — `dates`, `map`, `article text`, `numbers`, `causes`, `statements`… (Hinglish works too: `saal tarikh`, `naksha`, `samkaleen`).
 - **14 ready subject sets** — Polity, History, Geography, Economy, Environment, Science, Culture, Current Affairs, Law, Mains, English, Prelims practice, Chronology pack, Universal.
 - Prompt rules built in: compulsory question-style cloze hints, first-timer friendly cards, a memory trick on every note, fact-checking, PYQ merging, no typed-answer cards.

@@ -996,7 +996,7 @@ window.APB_DATA = {
     "tags": "Biology::Cell Src::NCERT",
     "f": {
      "Text": "The organelle that makes most of a cell's ATP is the {{c1::mitochondrion::Which organelle?}}.",
-     "Extra": "<b>Why/How:</b> It has its own DNA and ribosomes.",
+     "Extra": "<b>Context:</b> Cell organelles — NCERT Class 11 Biology, <i>Cell: The Unit of Life</i>; a regular Prelims fact.<br><b>Explanation:</b> Mitochondria carry out aerobic respiration and release energy as ATP. They even have their own DNA and ribosomes.",
      "Mnemonics": "Mighty-chondria = mighty power.",
      "Source": "NCERT Class 11 Biology – Cell"
     }

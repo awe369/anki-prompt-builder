@@ -181,6 +181,14 @@ dialog#mv::backdrop { background: rgba(10,12,18,.6); }
 .xbtn { justify-self: start; }
 .trow .xbtn { grid-column: 1 / -1; }
 
+.pmbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.pmbtn { font: inherit; text-align: left; display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.pmbtn b { font-family: var(--display); font-size: 15.5px; }
+.pmbtn span { font-size: 12.5px; color: var(--muted); }
+.pmbtn.on { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+#uniWrap[hidden], #mineWrap[hidden] { display: none; }
+#mineWrap { display: grid; gap: 16px; }
+
 /* ---------------- website shell ---------------- */
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body { margin: 0; }
@@ -237,3 +245,36 @@ a { color: var(--accent); }
 .site-foot .in { max-width: 1240px; margin: 0 auto; padding: 24px 20px 40px; display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; color: var(--muted); font-size: 13.5px; }
 .wrap { padding-block: 8px 24px; }
 section.spaced { padding-block: 36px 8px; }
+
+/* ---- card-making guide ---- */
+.ibtn { font: inherit; font-size: 12.5px; font-weight: 600; justify-self: start; border: 1px solid var(--line); background: var(--bg); color: var(--accent); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.ibtn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.trow .ibtn { grid-column: 1 / -1; }
+.mv-guide { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 12px; scroll-margin-top: 8px; }
+.mv-guide:empty { display: none; }
+.gd-head h3 { margin: 0; font-family: var(--display); font-size: 18px; }
+.gd-steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.gd-steps code, .gd-tip code, .gd-rules code, .gd-modes code { font-family: var(--mono); font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+.gd-steps code.nt { color: var(--accent); font-weight: 600; }
+.gd-tip { margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--accent-soft); font-size: 14px; }
+.gd-fields { display: grid; gap: 10px; }
+.gd-f { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 6px; background: var(--panel); }
+.gd-fn { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.gd-v { margin: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; background: var(--card); color: var(--code); border-radius: 8px; padding: 10px 12px; max-height: 260px; overflow: auto; }
+.gd-rules { border: 1px solid var(--line); border-radius: 10px; padding: 0 12px; }
+.gd-rules summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+.gd-rules p { margin: 0 0 8px; font-size: 13.5px; color: var(--muted); }
+.gd-modes { display: grid; gap: 8px; }
+.gd-mlist { display: flex; flex-wrap: wrap; gap: 6px; }
+.gd-imp { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+#guidelist { display: grid; gap: 18px; }
+.gsec h3 { margin: 0 0 8px; font-family: var(--display); font-size: 16px; }
+.gsec[hidden], .gitem[hidden] { display: none; }
+.glist { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 8px; }
+.gitem { font: inherit; text-align: left; display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: center; padding: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); cursor: pointer; min-width: 0; }
+.gitem:hover { border-color: var(--accent); }
+.gitem img { width: 64px; height: 64px; object-fit: cover; object-position: top; border-radius: 6px; border: 1px solid var(--line); background: #f4f3ef; }
+.gitem b { display: block; font-size: 14px; }
+.gitem small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: 12px; }
+.gsearch { margin-bottom: 14px; }
+kbd { font-family: var(--mono); font-size: 12px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--bg); }
