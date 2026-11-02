@@ -60,6 +60,11 @@ window.APB_DATA = {
    "k": "game",
    "label": "🎮 Revision games",
    "desc": "Fast revision rounds — exam se pehle quick test."
+  },
+  {
+   "k": "soft",
+   "label": "🎭 Personality, humour & conversation",
+   "desc": "Sense of humour, comebacks, body language, small talk — yaad karne ke liye nahi, karne ke liye."
   }
  ],
  "subj": [
@@ -4053,6 +4058,479 @@ window.APB_DATA = {
     "Subject",
     "Source"
    ]
+  },
+  {
+   "k": "comeback",
+   "nm": "🎤 Comeback Drill",
+   "name": "🎤 Comeback Drill",
+   "cat": "soft",
+   "best": "Front par asli taana ya sawal — tum bolkar jawab do, phir flip. Behaviour ka sabse zaroori card.",
+   "kw": "comeback reply roast insult taana jawab banter witty humour savage response trigger awkward question tease",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every jibe, taunt, awkward question or insult the source teaches a reply to",
+   "fields": [
+    "Situation",
+    "They Said",
+    "Move",
+    "Lines",
+    "Why It Works",
+    "Trap",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Situation: where it happens and who says it (`Rishtedaar, family function`). They Said: the exact line a real person would say, in natural Hinglish. Move: the framework being practised. Lines: 2–3 ready replies separated by `<br>`, best one first, each one short enough to actually say out loud. Why It Works: 1–2 lines of mechanism. Trap: the one thing that kills the move (usually sounding defensive or explaining yourself). Memory: a hook for the move. Source: video / book.",
+    "- Write triggers an Indian 20–30 year old actually faces: shaadi, salary, padhai, result, looks, weight, baal, job, gaadi, gaon vs city, “abhi tak kuch nahi kiya”. Never translate an American example — rewrite it in his world.",
+    "- This is a PRODUCTION card, not a recall card: the learner must speak an answer before flipping. Do not put the answer anywhere in the front fields.",
+    "- At least 3–6 of these per framework, each with a DIFFERENT trigger. Never repeat a trigger with the same move."
+   ],
+   "ex": {
+    "tags": "Charisma::Humour Move::AgreeAmplify",
+    "f": {
+     "Situation": "Rishtedaar, family function",
+     "They Said": "Itni age ho gayi, shaadi kab karoge?",
+     "Move": "Agree &amp; Amplify",
+     "Lines": "“Sahi keh rahe ho, age to ho gayi — abhi karte hain, bas 2 ghante me. Time ho to aa jaana.”<br>“Haan ji, itni der ho gayi ki ab to seedha pota chahiye.”<br>“Bilkul, main to kal hi kar leta — ladki wale meri umar sun ke bhaag jaate hain.”",
+     "Why It Works": "Insult ko accept karke itna <b>exaggerate</b> kar do ki wo bethuka lage — ab mazaak tumhare control me hai, unke nahi.",
+     "Trap": "Zara bhi safai di (“abhi time hai, dekhte hain”) to defensive dikh gaye aur move mar gaya.",
+     "Memory": "Agree » Amplify » Absurd. Maano, badhao, bakwaas bana do.",
+     "Source": "Sense of humour frameworks (YouTube)"
+    }
+   },
+   "ex2": {
+    "tags": "Charisma::Humour Move::Misunderstanding",
+    "f": {
+     "Situation": "Office, colleague teasing",
+     "They Said": "Yaar tum to bade busy aadmi ho aajkal, time hi nahi hai tumhare paas.",
+     "Move": "Art of Misunderstanding",
+     "Lines": "“Haan, aajkal main sirf important logon se milta hoon… tum kaise aa gaye?”<br>“Time to hai, bas tumhare liye nahi hai.”",
+     "Why It Works": "Baat ka ulta matlab jaanbujh kar nikaalna — galatfehmi dekh kar hansi aati hai, aur blame kisi par nahi jaata.",
+     "Trap": "2 second confused/dumb play nahi kar paaye to joke flat; aur agar taunt sach me chubh gaya to mat use karo.",
+     "Memory": "Jaanbujh kar galat samjho, 2 second bhola bano.",
+     "Source": "Sense of humour frameworks (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "framework",
+   "nm": "🧠 Framework Card",
+   "name": "🧠 Framework Card",
+   "cat": "soft",
+   "best": "Framework ka mechanism — naam se kaam tak aur situation se naam tak, dono taraf.",
+   "kw": "framework principle rule technique method mechanism secret concept soft skill why it works",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every named framework, secret, rule or principle the source teaches",
+   "fields": [
+    "Framework",
+    "Hook",
+    "Steps",
+    "Works Because",
+    "Fails When",
+    "Example",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Framework: its name (keep the speaker's own name for it). Hook: one line — what it does, in under 12 words. Steps: 2–4 steps separated by `<br>`, each starting with a verb. Works Because: the psychology in 1–2 simple lines. Fails When: the exact condition that breaks it — this field is never empty. Example: one real line from the source showing it in action. Memory: a hook. Source.",
+    "- This card is asked in BOTH directions, so never write the framework's name inside Hook, Steps or Example — otherwise the “which framework is this?” card leaks its own answer.",
+    "- One card per framework. If the source teaches five secrets, make exactly five of these."
+   ],
+   "ex": {
+    "tags": "Charisma::Humour Move::RolePlay",
+    "f": {
+     "Framework": "Role Play",
+     "Hook": "Apni normal personality se ulta character 2 minute ke liye odh lo.",
+     "Steps": "1. Apni default quality pehchano (shaant, humble, formal).<br>2. Uska <b>ulta</b> character chuno (loud, arrogant, over-confident).<br>3. Thodi der usi me bolo, phir normal par aa jao.",
+     "Works Because": "Humour surprise aur unpredictability par chalta hai. Jitna zyada contrast tumhari asli personality se, utna zyada entertainment — log tumhe predict nahi kar paate.",
+     "Fails When": "Character tumhari normal personality jaisa hi ho (koi contrast nahi), ya tum usme phans kar sach me arrogant lagne lago.",
+     "Example": "Dwayne Johnson normally humble hai, par “The Rock” hyper-confident, loud aur attention-seeker hai — isliye har entry par surprise milta hai.",
+     "Memory": "Ulta character = surprise. Shaant ho to loud bano.",
+     "Source": "Sense of humour frameworks (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "weakstrong",
+   "nm": "⚖️ Weak vs Strong",
+   "name": "⚖️ Weak vs Strong",
+   "cat": "soft",
+   "best": "Front par galat jawab dikhta hai — tumhe diagnose karke strong version banana hai.",
+   "kw": "weak strong contrast wrong right mistake antipattern insecure defensive better version compare reply",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every mistake, insecure habit or weak reply the source warns against",
+   "fields": [
+    "Situation",
+    "Weak Reply",
+    "Strong Reply",
+    "What Changed",
+    "Principle",
+    "Extra",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Situation: the moment in one line. Weak Reply: what most people (or the insecure version of you) say or do — written out as a real line, not as a description. Strong Reply: what the strong version says or does. What Changed: the one thing that is different, in one line. Principle: the underlying rule. Extra: 1–2 lines of why the weak version costs you. Memory: a hook. Source.",
+    "- The front shows only Situation + Weak Reply, so Weak Reply must never hint at the fix.",
+    "- Diagnose a BEHAVIOUR, not a fact. Good targets: showing that the joke landed, asking for respect, getting defensive, laughing at someone instead of with them, giving a one-word answer to a closed question."
+   ],
+   "ex": {
+    "tags": "Charisma::SRK Move::NoRequest",
+    "f": {
+     "Situation": "Doston ke group ne tumpe point maar diya",
+     "Weak Reply": "“Yaar aisa mat bolo, bura lagta hai.”",
+     "Strong Reply": "Halke se hansna aur wahi baat unke hi kisi dikhte hue nuks par laut ke maar dena — ya baat ko hawa me uda dena.",
+     "What Changed": "Response me <b>request</b> khatam — ab dikh raha hai ki tumhe farak hi nahi padta.",
+     "Principle": "Jo cheez tumhe matter karti dikhti hai, wahi agla target banti hai.",
+     "Extra": "Bura lagna dikhane se group ko pata chal jaata hai ki button kahan hai, aur wahi button baar baar dabta hai.<br>🧠 <b>Trick:</b> Request dikhi = target bani.",
+     "Memory": "Farak nahi padta — yahi poora jawab hai.",
+     "Source": "SRK sense of humour secrets (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "scene",
+   "nm": "🎬 Scene Replay",
+   "name": "🎬 Scene Replay",
+   "cat": "soft",
+   "best": "Asli clip ka dialogue, move wali line blank — exact beat yaad rehta hai.",
+   "kw": "clip scene dialogue interview transcript exchange example conversation replay quote line",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "multi",
+   "star": true,
+   "np": true,
+   "hunt": "every real clip or exchange the source plays, where one line is the move",
+   "fields": [
+    "Clip",
+    "Text",
+    "Move",
+    "Extra",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Clip: who is talking and where, in one line (`SRK, Ask SRK — ek fan ne umar par taunt kiya`). Text: the exchange, 2–5 lines, each line `<b>Speaker:</b> line`, joined with `<br>`. Cloze ONLY the line that contains the move. Move: the framework name. Extra: what exactly he did in that line. Memory: a hook. Source.",
+    "- Keep the lines close to what was actually said (Hinglish is fine); never invent a clip that is not in the source.",
+    "- Each blank is `{{cN::line::question hint}}` and the hint is a clear question — `::Isne kaise palat diya?`, `::Kaunsi line maari?` — never a one-word hint."
+   ],
+   "ex": {
+    "tags": "Charisma::SRK Move::TargetTheQuirk",
+    "f": {
+     "Clip": "SRK, Ask SRK — ek banda umar aur daadhi par taunt karta hai",
+     "Text": "<b>Fan:</b> Teri kya umar hai? Daadhi ko dye kiya na tune?<br><b>SRK:</b> {{c1::“Dye ki na daadhi tune, phir kya bol raha hai mujhse.”::Usne taunt ko kaise palat diya?}}",
+     "Move": "Target the visible quirk",
+     "Extra": "Safai dene ke bajaye saamne wale ki apni dikhti hui cheez par wahi baat laut ke maar di — poora exchange 2 second me unke paale me chala gaya.",
+     "Memory": "Jo nuks dikh raha hai, wahi laut ke maaro.",
+     "Source": "SRK sense of humour secrets (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "rep",
+   "nm": "🎯 Daily Rep",
+   "name": "🎯 Daily Rep",
+   "cat": "soft",
+   "best": "Sawal nahi — aaj ka kaam. Knowledge se behaviour banane wala card.",
+   "kw": "rep practice action habit drill exercise assignment behaviour daily task do today trigger",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Extra",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "the one small thing the learner should physically practise today",
+   "fields": [
+    "Rep",
+    "Trigger",
+    "How Long",
+    "Success Looks Like",
+    "Why",
+    "Extra",
+    "Source"
+   ],
+   "spec": [
+    "- Rep: the action, as an order, doable TODAY without preparation (`Jab bhi koi tumpe point maare, pehle 2 second face muscles relax karo, phir bolo`). Trigger: the exact moment it fires — a situation, not a time of day. How Long: `aaj bhar`, `agle 3 din`, `har baatcheet me 1 baar`. Success Looks Like: how the learner knows it worked, in one observable line. Why: the mechanism in 1–2 lines. Extra: what usually goes wrong on the first try, plus `🧠 <b>Trick:</b> …`. Source.",
+    "- Only 1–3 of these per source. They are not facts, so never make a rep for every point — pick the ones that change behaviour.",
+    "- No vague reps (“confident raho”, “practise karo”). If it cannot be observed by the end of the day, rewrite it."
+   ],
+   "ex": {
+    "tags": "Charisma::BodyLanguage Rep::FaceMuscles",
+    "f": {
+     "Rep": "Jab bhi koi tumpe point maare ya tease kare, bolne se pehle 2 second <b>face muscles consciously relax</b> karo — phir jawab do.",
+     "Trigger": "Koi taunt, mazaak ya unexpected sawal",
+     "How Long": "Aaj bhar, har baar",
+     "Success Looks Like": "Jawab dete waqt saans normal thi aur line tumhare control me nikli — jhatke me nahi.",
+     "Why": "Chehre ki 43 muscles se saamne wala subconsciously tumhara state padhta hai. Relaxed face “mujhe farak nahi padta” signal bhejta hai, aur tumhara apna brain bhi defence mode se bahar aa jaata hai.",
+     "Extra": "Pehli baar me yaad hi nahi aata — isliye ek physical cue chuno (jabda dheela karna) jo trigger ke saath juda ho.<br>🧠 <b>Trick:</b> Pehle chehra dheela, phir mooh chalu.",
+     "Source": "SRK sense of humour secrets (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "linebank",
+   "nm": "💬 Line Bank Cloze",
+   "name": "💬 Line Bank Cloze",
+   "cat": "soft",
+   "best": "Wo exact line jo mooh par chahiye — ek blank, back par kab aur kyun.",
+   "kw": "line bank phrase script exact wording sentence cloze ready line opener filler",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "one",
+   "star": false,
+   "np": true,
+   "hunt": "every ready-made line, opener or phrasing worth having word for word",
+   "fields": [
+    "Text",
+    "Extra",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Text: ONE blank `{{c1::answer::hint}}` per note. Mix two styles 50 / 50 across the deck: half as a direct question (`Q: Koi taunt kare to Agree &amp; Amplify ka pehla kadam kya hai?<br>{{c1::taunt se agree karna::Pehla kadam?}}`), half as a full self-contained sentence with the blank inside it.",
+    "- The back is never empty. Extra = `<b>Kab:</b>` the situation this line is for · `<b>Kyun:</b>` 2–3 simple lines. Memory = the hook, never empty. Source = video / book.",
+    "- Use this only for wording worth remembering exactly; a whole framework goes in 🧠 Framework Card, a reply drill in 🎤 Comeback Drill."
+   ],
+   "ex": {
+    "tags": "Charisma::SmallTalk Move::Pivot",
+    "f": {
+     "Text": "Boring topic se apne wale topic par aane ke liye sabse easy line hai — {{c1::“X ke baare me tumhari kya rai hai?”::Kaunsi line?}}",
+     "Extra": "<b>Kab:</b> Jab baat mausam, cricket ya “ghar par sab kaise hain” me atak jaaye.<br><b>Kyun:</b> Logon ko apni rai dena pasand hai, isliye ye sawal kabhi reject nahi hota — aur X me tum apna interest daal dete ho.",
+     "Memory": "Rai maango, topic ghuma lo.",
+     "Source": "Small talk for introverts (YouTube)"
+    }
+   },
+   "ex2": {
+    "tags": "Charisma::SmallTalk Move::AnswerStatements",
+    "f": {
+     "Text": "Small talk aage badhane ka sabse simple tareeka: sirf sawalon ka jawab mat do, balki batao ki unki baat se {{c1::tumhe kaisa mehsoos hua::Kya batao?}}.",
+     "Extra": "<b>Kab:</b> Jab saamne wala koi statement sunaye aur tumse kuch poocha na ho.<br><b>Kyun:</b> Statement par reaction dena hi conversation me ghusne ka invitation hai — warna awkward silence aata hai aur banda nikal leta hai.",
+     "Memory": "Sawal ka intezaar nahi — feeling bata do.",
+     "Source": "Small talk for introverts (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "convladder",
+   "nm": "🗣️ Conversation Ladder",
+   "name": "🗣️ Conversation Ladder",
+   "cat": "soft",
+   "best": "3-turn baatcheet — har turn par tumhe agli line khud banani hai, step by step khulti hai.",
+   "kw": "conversation small talk ladder turn dialogue deepen pivot rapport listening connect introvert",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation"
+   ],
+   "tr": "Memory",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every multi-turn conversation move: opening, deepening, pivoting, listening, connecting",
+   "fields": [
+    "Goal",
+    "Their Line 1",
+    "Your Move 1",
+    "Their Line 2",
+    "Your Move 2",
+    "Principle",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Goal: where this conversation should end up (`Boring small talk se ek asli topic tak`). Their Line 1: a realistic opening line from the other person. Your Move 1: the reply you should produce, plus a short `—` note on what it does. Their Line 2: how a normal person would respond to that. Your Move 2: the second-step reply that reaches the goal. Principle: the rule behind both moves. Memory: a hook. Source.",
+    "- The card reveals one step at a time, so each Your Move must be a line you could say out loud, not a description of a strategy.",
+    "- Keep it to exactly two of your moves. A longer exchange gets split into a second card with a different goal."
+   ],
+   "ex": {
+    "tags": "Charisma::SmallTalk Move::Deepen",
+    "f": {
+     "Goal": "Closed-ended boring sawal se ek asli topic tak pahunchna",
+     "Their Line 1": "Aur sunao, movies waghera dekhne jaate ho kabhi?",
+     "Your Move 1": "“Haan, par aajkal main theatre se zyada ek hi scene baar baar dekhta hoon…” — chhote sawal ka <b>lamba</b> jawab, taaki baat ko pakadne ke liye kuch mile.",
+     "Their Line 2": "Achha? Woh kaise?",
+     "Your Move 2": "“Ek cheez batao, tumhari kya rai hai — ______?” — ab jaanbujh kar apne interest wale topic par pivot.",
+     "Principle": "Log bore sawal poochte hain; tumhara kaam un par rukna nahi, unhe apne interesting topic tak le jaana hai. Seedha jawab chhodne par log bura nahi maante — baat interesting ho jaaye to shukriya maante hain.",
+     "Memory": "Chhota sawal » lamba jawab » apna topic.",
+     "Source": "Small talk for introverts (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "mentalmodel",
+   "nm": "🧩 Mental Model",
+   "name": "🧩 Mental Model",
+   "cat": "soft",
+   "best": "Kisi bhi video par chalta hai — ek soch ka lens: kab pehchano, tab karo kya. Dono direction se poochha jaata hai.",
+   "kw": "mental model lens principle idea thinking framework motivational tips mindset heuristic rule of thumb any video",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation",
+    "Any video"
+   ],
+   "tr": "Memory",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every reusable idea or lens the source teaches — the thinking behind the advice, not the advice itself",
+   "fields": [
+    "Model",
+    "In One Line",
+    "The Idea",
+    "Spot It",
+    "Use It",
+    "Example",
+    "Flip Side",
+    "Your Case",
+    "Memory",
+    "Source"
+   ],
+   "spec": [
+    "- Model: a short memorable name for the idea (2–3 words; coin one if the speaker did not name it — `Defence Mode`, `Attention Fuel`). In One Line: the lens in under 12 words. The Idea: 2–4 lines of the mechanism, simple enough for a first-timer. Spot It: the real-life SIGNAL that tells you this model applies, written as something the learner would actually notice about himself or a situation. Use It: what to DO once spotted, in one or two concrete lines. Example: one example from the source. Flip Side: where the model misleads or stops working — never empty, never “none”. Your Case: one question that makes the learner apply it to his own last week. Memory: a hook. Source.",
+    "- This note is asked in both directions (name → lens, and signal → model), so the model's name must NOT appear inside Spot It.",
+    "- A mental model is the reusable thinking, not the tip. “Subah 5 baje utho” is a tip; “energy khoone se pehle sabse zaroori kaam” is a model. If an idea only works in one narrow situation, it belongs in another note type.",
+    "- 3–8 per video. Every model must stand on its own months later, without the video."
+   ],
+   "ex": {
+    "tags": "Charisma::SRK Model::DefenceMode",
+    "f": {
+     "Model": "Defence Mode",
+     "In One Line": "Jo cheez bachani hai, wahi dimaag band kar deti hai.",
+     "The Idea": "Jaise hi izzat khatre me lagti hai, dimaag defend karne me lag jaata hai — aur us waqt koi jawab nahi sujhta. Pressure hatte hi wahi saare jawab apne aap aa jaate hain. Matlab talent ki kami nahi thi, mode galat tha.",
+     "Spot It": "Koi baat chubhi aur pehla reflex safai dena ya chup ho jaana tha — aur sahi line 10 minute baad yaad aayi.",
+     "Use It": "Jawab dhoondhne se pehle daav hatao: maan lo ki is ek line se kuch nahi bigadta. Chehra dheela, ek saans — phir bolo.",
+     "Example": "Jo log apne upar mazaak nahi sah paate, group unhi ko sabse zyada target karta hai.",
+     "Flip Side": "Har jagah defence galat nahi hota. Jahan sach me line paar ho rahi ho, wahan halka jawab nahi, seedhi baat chahiye.",
+     "Your Case": "Pichle hafte kis ek baat par tum defence mode me gaye the? Wahi situation dobara aaye to pehla kadam kya hoga?",
+     "Memory": "Daav hatao, dimaag khulega.",
+     "Source": "SRK sense of humour secrets (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "playbook",
+   "nm": "📋 Action Playbook",
+   "name": "📋 Action Playbook",
+   "cat": "soft",
+   "best": "System ka main card — front par situation, tumhe exact steps bolne hain. Kisi bhi category par chalta hai.",
+   "kw": "action step steps playbook how to exact procedure checklist method routine technique do this when trading study voice",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation",
+    "Any video"
+   ],
+   "tr": "Why It Works",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "every piece of advice that can be turned into exact steps for a specific situation",
+   "fields": [
+    "Move",
+    "When",
+    "Steps",
+    "Say This",
+    "Avoid",
+    "Why It Works",
+    "Check",
+    "Source"
+   ],
+   "spec": [
+    "- Move: the action's short name (2–4 words). When: the exact situation that triggers it — the ONLY thing shown on the front, so it must be recognisable in real life (`Lift me kisi ajnabi ke saath`, `Trade lene se pehle, naya session khula hai`). Steps: 2–5 numbered steps separated by `<br>`, each starting with a verb and concrete enough to follow without thinking. Say This: the exact words, when words are part of it (leave empty otherwise). Avoid: the one mistake that ruins it. Why It Works: 1–2 lines. Check: how the learner knows it worked, observable the same day. Source.",
+    "- Steps must be EXECUTABLE, not advice. Bad: `confident raho`. Good: `1. Phone jeb me rakho 2. Pair ki taraf mudo 3. Ek sawal poochho aur chup ho jao`. If a step cannot be done without judgement, break it into smaller steps.",
+    "- One situation per note. The same technique used in two different situations is two notes, because the front is the situation.",
+    "- This is the default type for any how-to, tips or method video. Use it unless a more specific type fits better."
+   ],
+   "ex": {
+    "tags": "C::Social C::Daily T::Charisma Src::XPlusOne",
+    "f": {
+     "Move": "X + 1",
+     "When": "Kisi bhi chhoti interaction me — lift, cashier, chai wala, party me naya banda",
+     "Steps": "1. Pehchano ki yahan ka <b>minimum</b> kya hai (lift me chuppi, cashier ko thank you).<br>2. Wo minimum poora karo — normal raho.<br>3. Usme <b>ek</b> chhoti cheez jodo: ek observation, ek tareef, ya ek chhota sawal.<br>4. Reaction ka intezaar mat karo — jod kar aage badh jao.",
+     "Say This": "“Ye jacket mast hai — kahan se li?” · “Aaj bheed kam hai, chain mili hogi aapko.”",
+     "Avoid": "Plus one ko bada mat banao — lambi baat ya tareef ke baad reaction ghoorna. Chhota hi rehna chahiye.",
+     "Why It Works": "Log wo yaad nahi rakhte jo zaroori tha, wo yaad rakhte hain jo zaroori se <b>thoda zyada</b> tha — 100% nahi, 101%.",
+     "Check": "Din khatam hone tak kam se kam 3 jagah tumne ek-ek cheez jodi.",
+     "Source": "Charisma = X + 1 (YouTube)"
+    }
+   }
+  },
+  {
+   "k": "mantra",
+   "nm": "🕉️ Mantra",
+   "name": "🕉️ Mantra",
+   "cat": "soft",
+   "best": "Ek chhoti line jo pressure me apne aap mooh par aaye. Front par situation, back par mantra bade type me.",
+   "kw": "mantra line slogan reminder one liner phrase quote punchline self talk anchor",
+   "subj": [
+    "Personality",
+    "Humour",
+    "Conversation",
+    "Any video"
+   ],
+   "tr": "Means",
+   "cz": "none",
+   "star": true,
+   "np": true,
+   "hunt": "the one line per idea that is worth carrying in your head",
+   "fields": [
+    "Mantra",
+    "Means",
+    "Say It When",
+    "Where From",
+    "Source"
+   ],
+   "spec": [
+    "- Mantra: 3–8 words, Hinglish, with rhythm — something a person would actually mutter to himself. It must be sayable out loud without feeling silly. Means: one plain line of what it tells you to do. Say It When: the exact moment it should fire (this is the front of the card). Where From: 2–3 lines of the idea behind it, so the mantra does not become an empty slogan. Source.",
+    "- Coin it from the video's idea; do not copy a long quote and call it a mantra. Prefer a contrast or a reversal (`Ready nahi aata, shuru karne se aata hai`), a rule (`Reaction hi fuel hai`), or an image (`Ek jagah khodo, paani wahin hai`).",
+    "- Maximum 2–4 per video. A deck of 50 mantras is a deck of nothing — these only work when they are few and sharp.",
+    "- No motivational filler (`never give up`, `hustle`), nothing that only sounds good in English, and nothing that promises a result."
+   ],
+   "ex": {
+    "tags": "C::Focus C::Daily T::Discipline Src::Procrastination",
+    "f": {
+     "Mantra": "Ready nahi aata. Shuru karne se aata hai.",
+     "Means": "Taiyaar mehsoos hone ka intezaar mat karo — wo feeling shuru karne ke baad aati hai.",
+     "Say It When": "Kaam saamne hai aur mann keh raha hai “thodi aur taiyaari kar lun, phir shuru karunga”",
+     "Where From": "Procrastination aalas nahi, bachav hai: kaam poora kar liya to pata chal jaayega ki tum kaafi ho ya nahi. Adhoora rakhne se sapna zinda rehta hai.",
+     "Source": "Procrastination is identity protection (YouTube)"
+    }
+   }
   }
  ],
  "presets": {
@@ -4393,6 +4871,31 @@ window.APB_DATA = {
    "sc-formula",
    "sc-map",
    "cloze"
+  ],
+  "🎬 Koi bhi video": [
+   "playbook",
+   "mantra",
+   "mentalmodel",
+   "rep"
+  ],
+  "🗣️ Baat-cheet": [
+   "comeback",
+   "weakstrong",
+   "convladder",
+   "linebank",
+   "playbook"
+  ],
+  "🎭 Personality": [
+   "comeback",
+   "framework",
+   "weakstrong",
+   "scene",
+   "rep",
+   "linebank",
+   "convladder",
+   "mentalmodel",
+   "playbook",
+   "mantra"
   ]
  },
  "cstyles": {
