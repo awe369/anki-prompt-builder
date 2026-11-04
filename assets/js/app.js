@@ -436,7 +436,7 @@
     L.push("- Keep every field in its position; an empty middle field still needs its TAB (two TABs in a row). Empty fields at the end can be dropped.");
     L.push("- No real line breaks or TABs inside a field — use `<br>` between lines. Inside fields, `|` is used ONLY as the column separator the note type expects.");
     L.push("- Never start a field with a double quote `\"` (use “ ” or ' instead); a starting `\"` breaks the import.");
-    L.push("- HTML only for formatting: `<b> <i> <u> <br> <ol><li> <sub> <sup>`. No `<table>`, no CSS, no images." + (tlcT.length ? " The one exception is " + tlcT.map(nm).join(", ") + ", whose Extra field uses exactly the `<div class=\"xh\">` / `<div class=\"xr\">` block shown in Part B, and whose Data field holds raw JSON." : ""));
+    L.push("- HTML only for formatting: `<b> <i> <u> <br> <ol><li> <sub> <sup>`. No `<table>`, no CSS, no images." + (tlcT.length ? " The one exception is " + tlcT.map(nm).join(", ") + ", whose Extra field uses exactly the `<div class=\"xh\">` / `<div class=\"xr\">` block shown in Part B, and whose Data field holds raw JSON." : "") + (has("umcq") ? " **Exception for `Universal MCQ`:** its Question and Explanation fields MAY use a plain table, `<table><tr><th>…</th><th>…</th></tr><tr><td>…</td><td>…</td></tr></table>` (no attributes, no CSS, all on one line), for match-the-following questions and comparisons (e.g. old vs new section numbers). They may also use `<ul><li>` lists. Use a table only when it is clearer than lines; never in the option fields." : ""));
     L.push("");
     L.push("### Example lines (→ means a TAB)");
     L.push("```");
