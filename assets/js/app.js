@@ -108,12 +108,12 @@
         : '<button type="button" class="shot" data-view="' + t.k + '" aria-label="Preview ' + esc(label(t)) + '"><img loading="lazy" src="' + img(t, "q") + '" alt="' + esc(label(t)) + ' front side"><span class="zoom">👁 Front / Back</span></button>';
       return '<div class="tile' + (on ? " on" : "") + '" data-tile="' + t.k + '">' + shot +
         '<label class="tpick"><input type="checkbox" data-k="' + t.k + '"' + (on ? " checked" : "") + '><span class="tname">' + esc(label(t)) + star + '</span></label>' +
-        '<span class="tbest">' + esc(t.best) + '</span>' + (t.np ? '<span class="tbest mono">' + esc(R(t).fields.join(" · ")) + '</span>' : '') + pills + gbtn(t.k) + '</div>';
+        '<span class="tbest">' + esc(t.best) + '</span>' + (t.np ? '<span class="tbest mono">' + esc(R(t).fields.join(" · ")) + '</span>' : '') + pills + gbtn(t.k) + dlbtn(t) + '</div>';
     }
     return '<div class="trow"><label class="tpick"><input type="checkbox" data-k="' + t.k + '"' + (on ? " checked" : "") + '>' +
       '<span class="tname">' + esc(label(t)) + star + '</span></label>' +
       '<button type="button" class="eye" data-view="' + t.k + '" aria-label="Preview ' + esc(label(t)) + '">👁</button>' +
-      '<span class="tbest">' + esc(t.best) + '</span>' + pills + gbtn(t.k) + '</div>';
+      '<span class="tbest">' + esc(t.best) + '</span>' + pills + gbtn(t.k) + dlbtn(t) + '</div>';
   }
   function gstate(g) { var ks = gk(g), n = ks.filter(function (k) { return SEL.indexOf(k) > -1; }).length; return { n: n, all: ks.length, ks: ks }; }
   function grow(g) {
@@ -263,7 +263,7 @@
     "  5. Extra = cause → effect between the events, then the trick (rhythm / gap pattern / story)."];
   var TLK = ["tlclassic", "ruler", "lanes", "sc-timeline"];
   var DATEK = ["sc-timeline", "tlclassic", "tlcontrast", "ruler", "lanes", "tapsorter", "order", "whichfirst", "duel", "tlbuilder", "chronocode", "timepin", "gantt", "contemp", "inkseq"];
-  var MCQK = ["sb-mcq", "sb-tf", "mcq", "elim", "ladder", "judge", "inkstat", "chronocode", "context", "whosaid", "slot"];
+  var MCQK = ["umcq", "sb-mcq", "sb-tf", "mcq", "elim", "ladder", "judge", "inkstat", "chronocode", "context", "whosaid", "slot"];
 
   function build() {
     var v = {}; ids.forEach(function (k) { v[k] = $(k).value.trim(); });
@@ -400,7 +400,7 @@
     if (!normalCloze.length && !tlcT.length && !cz("trap").length && !cz("slot").length && !cz("tfv").length) L.push((r++) + ". **No cloze markers** `{{c1::…}}` anywhere — these note types don't use them.");
     if (dateT.length) L.push((r++) + ". **Dates:** exact, one format everywhere (`1857`, `15 Aug 1947`, `c. 1500 BCE`, `1556-1605`); never guess a date — leave the item out and list it in the summary.");
     if (sel.some(function (t) { return ["mappin", "postcard", "bearing", "sc-map"].indexOf(t.k) > -1; })) L.push((r++) + ". **Coordinates:** decimal `lat, lon` (e.g. `24.55, 93.80`), accurate to 2 decimals; state names spelled in full as on the official map.");
-    if (withSubj.length) L.push((r++) + ". **Subject field** (" + withSubj.map(nm).join(", ") + "): one word — Polity, History, Geography, Economy, Environment, Science, Culture, Law or Current Affairs.");
+    if (withSubj.length) L.push((r++) + ". **Subject field** (" + withSubj.map(nm).join(", ") + "): one word — Polity, History, Geography, Economy, Environment, Science, Culture, Law or Current Affairs" + (has("umcq") ? " (Universal MCQ also takes GS, Maths, Reasoning, English, Hindi or Computer)" : "") + ".");
     if (smart.length) L.push((r++) + ". " + smart.map(nm).join(" and ") + ": each note gets exactly ONE of its chosen mode tags (" + smart.map(function (g) { return g.modes.map(function (x) { return x.mtag ? "`" + x.mtag + "`" : "none"; }).join(" / "); }).join("; ") + ") in the Tags column, next to the topic tags.");
     L.push((r++) + ". **No typed-answer cards** — never make a card where the learner has to type the answer.");
     if (soft.length) {
@@ -697,6 +697,7 @@
     GCOPY = [];
     var h = '<div class="gd-head"><h3>🛠 Khud kaise banayein</h3><span class="hint">Anki mein ye card haath se banane ka tareeka — example ke saath.</span></div>';
     h += '<ol class="gd-steps">' +
+      (o.dl ? '<li>Pehli baar? Note type download karke Anki mein import karo (double-click): <a class="btn ghost" href="' + esc(o.dl) + '" download>⬇ ' + esc(o.name) + ' (.apkg)</a></li>' : '') +
       '<li>Anki kholo → <b>Add</b> (<kbd>A</kbd>) dabao.</li>' +
       '<li><b>Type</b> mein ye note type chuno: <code class="nt">' + esc(o.name) + '</code> <button type="button" class="mini gcp" data-gc="' + gcopy(o.name) + '">Copy naam</button></li>' +
       '<li>Neeche diye example ki tarah har <b>field</b> bharo. Nayi line ke liye <kbd>Enter</kbd> dabao.</li>' +
@@ -722,7 +723,7 @@
   }
   function guideFor(k) {
     var t = BYK[k]; if (!t) return null;
-    var r = R(t), o = { name: r.name, fields: r.fields, ex: r.ex.f, tags: r.ex.tags, spec: r.spec, cz: r.cz, mtag: t.mtag || "" };
+    var r = R(t), o = { name: r.name, fields: r.fields, ex: r.ex.f, tags: r.ex.tags, spec: r.spec, cz: r.cz, mtag: t.mtag || "", dl: t.dl || "" };
     if (t.grp) o.modes = D.types.filter(function (x) { return x.grp === t.grp; });
     return o;
   }
@@ -737,6 +738,7 @@
     $("mv-guide").innerHTML = guideHTML(o);
   }
   function openGuide(k) { VIEWG = null; openView(k); setTimeout(function () { $("mv-guide").scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); }
+  function dlbtn(t) { return t.dl ? '<a class="ibtn" href="' + esc(t.dl) + '" download title="Note type ko Anki mein import karo">⬇ Note type (.apkg)</a>' : ""; }
   function gbtn(k) { return '<button type="button" class="ibtn" data-guide="' + k + '" title="Ye card khud kaise banayein">ℹ️ Kaise banayein</button>'; }
 
   function drawGuideSection() {

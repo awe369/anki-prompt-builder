@@ -11,6 +11,7 @@ You see how every card will look in Anki (front and back) before you pick it, ch
 - **Smart Basic and Smart Cloze** are selected as whole note types by default (the AI picks the best mode per fact); open *“Specific modes chuno”* to keep only certain modes.
 - **📘 Card-making guide** — every note type has an “ℹ️ Kaise banayein” button and a Guide section: step-by-step how to make the card by hand in Anki, each field with an example, format rules, and a one-click “copy as import file”.
 - **Search by kind of information** — `dates`, `map`, `article text`, `numbers`, `causes`, `statements`… (Hinglish works too: `saal tarikh`, `naksha`, `samkaleen`).
+- **🎯 Universal MCQ** — one tap-to-answer MCQ note type for every subject (GS, Maths, Reasoning, English, Hindi, Law…), with options shuffled on every review, multi-correct support, 16 subject colour themes, and light/dark/phone layouts. Download the note type from its tile (`assets/notetypes/Universal_MCQ.apkg`).
 - **14 ready subject sets** — Polity, History, Geography, Economy, Environment, Science, Culture, Current Affairs, Law, Mains, English, Prelims practice, Chronology pack, Universal.
 - Prompt rules built in: compulsory question-style cloze hints, first-timer friendly cards, a memory trick on every note, fact-checking, PYQ merging, no typed-answer cards.
 - Optional extra cards from **NCERT, Wikipedia, current affairs and PIB** up to the date you set.
@@ -42,6 +43,7 @@ assets/js/data.js       note-type catalog: names, fields, format rules, examples
 assets/js/app.js        picker, search, previews and prompt builder
 assets/js/previews.js  front (-q) and back (-a) preview of every card, embedded as images
 assets/img/             favicon and social-share image
+assets/notetypes/       downloadable note types (.apkg)
 .nojekyll               tells GitHub Pages to serve the files as they are
 ```
 

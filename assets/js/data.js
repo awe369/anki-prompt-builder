@@ -2967,6 +2967,67 @@ window.APB_DATA = {
    ]
   },
   {
+   "k": "umcq",
+   "nm": "Universal MCQ",
+   "name": "Universal MCQ",
+   "fields": [
+    "Question",
+    "OptionA",
+    "OptionB",
+    "OptionC",
+    "OptionD",
+    "OptionE",
+    "Answer",
+    "Explanation",
+    "Mnemonic",
+    "Extra",
+    "Source",
+    "Subject"
+   ],
+   "cat": "pre",
+   "best": "Tap-to-answer MCQ for every subject. Options shuffle on every review, multi-correct works, and each subject gets its own colour.",
+   "kw": "universal mcq multiple choice quiz options tap shuffle multi correct select all gs maths quant reasoning english hindi law computer exam pyq practice",
+   "subj": [
+    "Polity",
+    "History",
+    "Geography",
+    "Economy",
+    "Environment",
+    "Science",
+    "Culture",
+    "Current Affairs",
+    "Law",
+    "Mains",
+    "English"
+   ],
+   "spec": [
+    "- Question: exam-style question (statements as `<ol><li>…</li></ol>` allowed; wrap the key term in `<b>`). OptionA–OptionD: one option each, similar length, all plausible. OptionE: EMPTY unless the question really has 5 options. Answer: ONLY the letter(s) — `B`, or `A, C` for multi-correct (the card then asks “Select ALL”). Explanation: why the right option is right, plus one line on each tempting wrong option. Mnemonic: one-line memory trick. Extra: one related high-yield fact, or empty. Source. Subject: one word — Polity, History, Geography, Economy, Environment, Science, Culture, Law, Current Affairs, GS, Maths, Reasoning, English, Hindi or Computer (sets the colour theme).",
+    "- Options are SHUFFLED on every review: an option must never refer to another option by its letter (no `Both A and B`). `All of the above`, `Both 1 and 2` and `Neither 1 nor 2` are fine (those questions are not shuffled). Spread the correct letter evenly over A–D."
+   ],
+   "tr": "Mnemonic",
+   "cz": "none",
+   "hunt": "facts best tested as a multiple-choice question (single or multi-correct), in any subject",
+   "star": true,
+   "dl": "assets/notetypes/Universal_MCQ.apkg",
+   "ex": {
+    "tags": "Polity::Fundamental_Rights Src::Laxmikanth",
+    "f": {
+     "Question": "Which Article of the Indian Constitution provides the <b>Right to Constitutional Remedies</b>?",
+     "OptionA": "Article 19",
+     "OptionB": "Article 21",
+     "OptionC": "Article 32",
+     "OptionD": "Article 226",
+     "OptionE": "",
+     "Answer": "C",
+     "Explanation": "<b>Article 32</b> lets a person move the <b>Supreme Court</b> directly to enforce Fundamental Rights. Dr. Ambedkar called it the <i>“heart and soul”</i> of the Constitution.<br>✗ <b>Art 19</b>: six freedoms (speech, assembly…)<br>✗ <b>Art 21</b>: life &amp; personal liberty<br>✗ <b>Art 226</b>: High Courts' writ power, wider than Art 32 because it also covers other legal rights",
+     "Mnemonic": "3️⃣2️⃣ → <b>“3 + 2 = Supreme 5”</b>: Art 32 goes straight to the Supreme Court.",
+     "Extra": "Five writs: Habeas Corpus, Mandamus, Prohibition, Certiorari, Quo Warranto.",
+     "Source": "Laxmikanth Ch. 7",
+     "Subject": "Polity"
+    }
+   }
+  },
+  {
    "k": "mcq",
    "nm": "🎓 Exam MCQ",
    "cat": "pre",
@@ -4818,6 +4879,7 @@ window.APB_DATA = {
    "whosaid"
   ],
   "Prelims practice": [
+   "umcq",
    "judge",
    "inkstat",
    "mcq",
